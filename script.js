@@ -32,12 +32,50 @@ var war = {
     bothDecks[1]=halfDeck;
     return bothDecks;
   },
+  compare: function(card1, card2){
+    var returnCards=[];
+    var valueCard1 = parseInt(card1.split("-")[0]);
+    var valueCard2 = parseInt(card2.split("-")[0]);
+    if (valueCard1>valueCard2){
+      returnCards[0]=card1;
+      returnCards[1]=card2;
+      returnCards[2]="player1"
+    }else if (valueCard2>valueCard1){
+      returnCards[0]=card2;
+      returnCards[1]=card1;
+      returnCards[2]="player2"
+    }else{
+      returnCards[0]=card1;
+      returnCards[1]=card2;
+      returnCards[2]="tie"
+    }
+    return returnCards;
+  },
+  playWar: function(deck1, deck2){
+    var pair = this.compare(deck1.shift(), deck2.shift());
+    if (pair[2] == "player1"){
+      deck1.push(pair[0]);
+      deck1.push(pair[0]);
+      console.log(deck1.length + " " + deck2.length)
+    }else if (pair[2] == "player2"){
+      deck2.push(pair[0]);
+      deck2.push(pair[0]);
+      console.log(deck1.length + " " + deck2.length)
+    }else if (pair[2] == "tie"){
+
+    }
+  },
+  playWarButton: function(deck1, deck2){
+    
+  }
 
 }
 
 var deck = war.makeDeck(13);
-war.cutDeck(deck);
-
+//war.cutDeck(deck);
+war.shuffleDeck(deck);
+var splitDecks = war.cutDeck(deck);
+war.playWar(splitDecks[0], splitDecks[1]);
 
 //notes: use shift to take a card off
 //use push to add a card to bottom
