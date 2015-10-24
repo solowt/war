@@ -1,4 +1,4 @@
-User stories for war:
+User stories for war:<br />
 1. As a user, I want to be able to be able to see html representations of cards because text based games are boring.<br />
 2. As a user, I want to be able to reset the game with a button so that I don't have to reload the page.<br />
 3. As a user, I want to be able to hear sounds whenever something happens (shuffling a deck, dealing cards) because sounds will make the game more immersive.<br />
