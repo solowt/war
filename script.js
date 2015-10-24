@@ -53,17 +53,21 @@ var war = {
   },
   playWar: function(deck1, deck2){
     var pair = this.compare(deck1.shift(), deck2.shift());
+    console.log("1 "+pair);
     if (pair[2] == "player1"){
       deck1.push(pair[0]);
-      deck1.push(pair[0]);
-      console.log(deck1.length + " " + deck2.length)
+      deck1.push(pair[1]);
+
     }else if (pair[2] == "player2"){
       deck2.push(pair[0]);
-      deck2.push(pair[0]);
-      console.log(deck1.length + " " + deck2.length)
-    }else if (pair[2] == "tie"){
+      deck2.push(pair[1]);
 
+    }else if (pair[2] == "tie"){
+      deck1.push(pair[0]);
+      deck1.push(pair[1]);
+      
     }
+    console.log("2 "+pair);
   },
   playWarButton: function(deck1, deck2){
     //add button
@@ -75,10 +79,12 @@ var war = {
 }
 
 var deck = war.makeDeck(13);
-//war.cutDeck(deck);
 war.shuffleDeck(deck);
 var splitDecks = war.cutDeck(deck);
-war.playWar(splitDecks[0], splitDecks[1]);
+while ((splitDecks[0].length > 0) && (splitDecks[1].length > 0)){
+  war.playWar(splitDecks[0], splitDecks[1]);
+}
+console.log(splitDecks);
 
 //notes: use shift to take a card off
 //use push to add a card to bottom
