@@ -1,0 +1,16 @@
+.card{
+  position: relative;
+  border: 2px solid black;
+  width: 50px;
+  height: 90px;
+
+}
+.spotB1  {
+  position: relative;
+  left:18px;
+}
+.index{
+  /*margin: auto auto auto 0;*/
+  position: relative;
+  left: 4px;
+}
