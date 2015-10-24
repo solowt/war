@@ -20,14 +20,24 @@ var war = {
       deck[k] = temp;
     }
     return deck;
-  }
-}
-var deck = war.makeDeck(13);
-var shuffledDeck = war.shuffleDeck(deck);
-console.log(deck.pop());
-console.log(deck.length);
-console.log(deck.pop());
-console.log(deck.length);
+  },
+  cutDeck: function(deck){
+    var bothDecks = [[]];
+    var halfDeck = [];
+    var halfDeckLength=deck.length/2;
+    while (deck.length>halfDeckLength){
+      halfDeck.push(deck.pop());
+    }
+    bothDecks[0]=deck;
+    bothDecks[1]=halfDeck;
+    return bothDecks;
+  },
 
-//notes: use pop to take a card off
-//use unshift("card") to add a card to bottom
+}
+
+var deck = war.makeDeck(13);
+war.cutDeck(deck);
+
+
+//notes: use shift to take a card off
+//use push to add a card to bottom
