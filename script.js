@@ -22,7 +22,7 @@ var war = {
     return deck;
   },
   cutDeck: function(deck){
-    var bothDecks = [[]];
+    var bothDecks = [];
     var halfDeck = [];
     var halfDeckLength=deck.length/2;
     while (deck.length>halfDeckLength){
@@ -66,7 +66,10 @@ var war = {
     }
   },
   playWarButton: function(deck1, deck2){
-    
+    //add button
+  },
+  tieWar: function(){
+    //deal with ties
   }
 
 }
