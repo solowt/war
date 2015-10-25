@@ -3,7 +3,17 @@
   border: 2px solid black;
   width: 50px;
   height: 90px;
-
+  background:white;
+}
+#player1Card{
+  position: absolute;
+  top: 200px;
+  left: 250px;
+}
+#player2Card{
+  position: absolute;
+  top: 200px;
+  left: 550px;
 }
 .spotB1  {
   position: relative;
@@ -13,4 +23,30 @@
   /*margin: auto auto auto 0;*/
   position: relative;
   left: 4px;
+}
+section{
+  border: 10px solid black;
+  background: papayawhip;
+  height: 100%;
+  width: 100%;
+  min-height: 500px;
+  min-width: 500px;
+}
+.deck1 {
+  background: white;
+  position: absolute;
+  border: 2px solid black;
+  width: 50px;
+  height: 90px;
+  top: 200px;
+  left: 100px;
+}
+.deck2 {
+  background: white;
+  position: absolute;
+  border: 2px solid black;
+  width: 50px;
+  height: 90px;
+  top: 200px;
+  left: 700px;
 }

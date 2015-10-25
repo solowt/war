@@ -5,7 +5,8 @@ var war = {
     var newCard = $("<div class='card'>\n</div>");
     var cardHTML = "\n\t<div class='front'>\n\t\t<div class='index'>"+value+"<br />"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t</div>"
     newCard.html(cardHTML);
-    $("body").append(newCard;    
+    $("section").append(newCard);
+    return newCard;
   },
   makeDeck: function(numRanks) {
     var newDeck = [];
