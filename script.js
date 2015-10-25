@@ -1,18 +1,24 @@
 var war = {
   cardPool: [], //to hold cards in the event of a tie
+  suits: [["Clubs","&clubs;" ], ["Hearts","&hearts;"], ["Diamonds","&diams;"], ["Spades","&spades;"]],
+  drawCard: function(suit, value){
+    var newCard = $("<div class='card'>\n</div>");
+    var cardHTML = "\n\t<div class='front'>\n\t\t<div class='index'>"+value+"<br />"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t</div>"
+    newCard.html(cardHTML);
+    $("body").append(newCard;    
+  },
   makeDeck: function(numRanks) {
     var newDeck = [];
-    var suits = ["Clubs", "Hearts", "Diamonds", "Spades"];
-    for (var i=0; i<suits.length; i++){
+    for (var i=0; i<this.suits.length; i++){
       for (var j=0; j<numRanks;j++){
-        var cardName = j+'-'+suits[i];
+        var cardName = j+'-'+this.suits[i][0];
         newDeck.push(cardName);
       }
     }
     return newDeck;
   },
   shuffleDeck: function(deck) {
-    var i, j, k;
+    var j, k;
     var temp;
     for (j = 0; j < deck.length; j++) {
       k = Math.floor(Math.random() * deck.length);
@@ -50,7 +56,6 @@ var war = {
       returnCards[0][1]=card2;
       returnCards[1]="tie";
     }
-    console.log(returnCards)
     return returnCards;
   },
   playWar: function(deck1, deck2){
@@ -98,34 +103,4 @@ var splitDecks = war.cutDeck(deck);
 while ((splitDecks[0].length > 0) && (splitDecks[1].length > 0)){
   war.playWar(splitDecks[0], splitDecks[1]);
 
-  console.log(splitDecks);
 }
-
-//notes: use shift to take a card off
-//use push to add a card to bottom
-
-// tieWar: function(deck1, deck2, pair){
-//   var tieStakes = 3;
-//   var tieCards = [];
-//   tieCards.push(pair.shift());
-//   tieCards.push(pair.shift());
-//   for (var i=0;i<tieStakes;i++){
-//     tieCards.push(deck1.shift());
-//     tieCards.push(deck2.shift());
-//   }
-//   var testPair = this.playWar(deck1, deck2);
-//   if (testPair.length == 1){
-//     if(testPair[0] == "player1"){
-//       for (var j=0;j<tieCards.length;j++){
-//         deck1.push(tieCards.shift());
-//       }
-//     }else if (testPair[0] == "player2"){
-//       for(var k=0; k<tieCards.length; k++){
-//         deck2.push(tieCards.shift());
-//       }
-//     }
-//   }else{
-//     return;
-//   }
-//
-// }
