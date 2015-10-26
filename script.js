@@ -1,12 +1,36 @@
 var war = {
   cardPool: [], //to hold cards in the event of a tie
-  suits: [["Clubs","&clubs;" ], ["Hearts","&hearts;"], ["Diamonds","&diams;"], ["Spades","&spades;"]],
-  drawCard: function(suit, value){
-    var newCard = $("<div class='card'>\n</div>");
-    var cardHTML = "\n\t<div class='front'>\n\t\t<div class='index'>"+value+"<br />"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t\t<div class='spotB1'>"+suit+"</div>\n\t</div>"
-    newCard.html(cardHTML);
-    $("section").append(newCard);
-    return newCard;
+  suits: [["Clubs","&clubs;" ], ["Hearts","&hearts;"], ["Diamonds","&diams;"], ["Spades","&spades;"]], //suits
+  currentDeck: null, //the current deck being used
+  halfDecks: [], //array to hold decks after they've been cut
+  playingGame: false, //boolean to keep track of game state
+  deck1Ready: false, //another boolean to keep track of the game state
+  deck2Ready: false, //another boolean to keep track of the game state
+  readyCard1: false, //another boolean to..
+  readyCard2: false,
+  value: "V",
+  suit: "S",
+  cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
+  getCardVal: function(card){
+    valueArray = [];
+    var valueCard = parseInt(card.split("-")[0]);
+    valueArray[0]= valueCard;
+    if (valueCard[1]="Clubs") {
+      valueArray[1] = "&clubs;";
+    }else if (valueCard[1]="Hearts") {
+      valueArray[1] = "&hearts;";
+    }else if (valueCard[1]="Diamonds") {
+      valueArray[1] = "&diams;";
+    }else if (valueCard[1]="Spades") {
+      valueArray[1] = "&spades;";
+    }
+    return valueArray;
+  },
+  drawCard: function(string, valueArray) {
+    returnString = "";
+    returnString = string.replace(/X/g, valueArray[0]);
+    returnString = returnString.replace(/Y/g, valueArray[1]);
+    return returnString;
   },
   makeDeck: function(numRanks) {
     var newDeck = [];
@@ -39,6 +63,10 @@ var war = {
     bothDecks[0]=deck;
     bothDecks[1]=halfDeck;
     return bothDecks;
+  },
+  getCardInfo: function(deck){
+    var valueCard = deck[0].split("-");
+    return valueCard;
   },
   compare: function(card1, card2){
     var returnCards=[[],""];
@@ -92,16 +120,90 @@ var war = {
     }
     return;
   },
-  playWarButton: function(deck1, deck2){
-    //add button
+  addButtonListeners: function(){
+    var self = this;
+    $("#createDeck").on("click", function(){
+      if (!self.playingGame) {
+        $(".initdeck").removeClass("hidden");
+        self.playingGame = true;
+        self.currentDeck = self.makeDeck(13);
+      }
+    });
+    $("#shuffleDeck").on("click", function(){
+      if (self.currentDeck){
+        self.shuffleDeck(self.currentDeck);
+      }
+    });
+    $("#cutDeck").on("click", function(){
+      self.deck1Ready = true;
+      self.deck2Ready = true;
+      self.halfDecks = self.cutDeck(self.currentDeck);
+      $(".initdeck").addClass("hidden");
+      $(".deck2").removeClass("hidden");
+      $(".deck1").removeClass("hidden");
+    });
+    $(".deck1").on("click", function(){
+      if (self.deck1Ready == true){
+        $(".topdeck1").html("");
+        $(".topdeck1").removeClass("hidden");
+        self.deck1Ready = false;
+      }
+    });
+    $(".deck2").on("click", function(){
+      if (self.deck2Ready == true){
+        $(".topdeck2").html("");
+        $(".topdeck2").removeClass("hidden");
+        self.deck2Ready = false;
+      }
+    });
+    $(".topdeck1").on("click", function(){
+      if (self.playingGame == true && self.deck1Ready == false){
+        console.log(self.halfDecks[0][0]);
+        var valueArray = self.getCardVal(self.halfDecks[0][0]);
+        var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
+        $(".topdeck1").html(newCardTemplate);
+        self.deck1Ready = true;
+        self.readyCard1 = true;
+        if (self.readyCard2 == true && self.readyCard1 == true){
+          self.readyCard2 = false;
+          self.readyCard1 = false;
+          self.playWar(self.halfDecks[0], self.halfDecks[1])
+          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 1500);
+          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 1500);
+          console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
+        }
+      }
+    });
+    $(".topdeck2").on("click", function(){
+      if (self.playingGame == true && self.deck2Ready == false){
+        console.log(self.halfDecks[1][0]);
+        var valueArray = self.getCardVal(self.halfDecks[1][0]);
+        var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
+        $(".topdeck2").html(newCardTemplate);
+        self.deck2Ready = true;
+        self.readyCard2 = true;
+        if (self.readyCard2 == true && self.readyCard1 == true){
+          self.readyCard2 = false;
+          self.readyCard1 = false;
+          self.playWar(self.halfDecks[0], self.halfDecks[1])
+          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 1500);
+          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 1500);
+          console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
+        }
+      }
+    });
+
   },
 
 }
-
-var deck = war.makeDeck(13);
-war.shuffleDeck(deck);
-var splitDecks = war.cutDeck(deck);
-while ((splitDecks[0].length > 0) && (splitDecks[1].length > 0)){
-  war.playWar(splitDecks[0], splitDecks[1]);
-
-}
+war.addButtonListeners();
+// var deck = war.makeDeck(13);
+// war.shuffleDeck(deck);
+// var splitDecks = war.cutDeck(deck);
+// var i=0;
+// while ((splitDecks[0].length > 0) && (splitDecks[1].length > 0)){
+//   war.playWar(splitDecks[0], splitDecks[1]);
+//   console.log(splitDecks[0].length +" "+splitDecks[1].length);
+//   i++;
+// }
+//   console.log(i)
