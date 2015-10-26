@@ -8,10 +8,8 @@ User stories for war:<br />
 gh-pages: http://solowt.github.io/war/index.html
 
 things to do:<br />
-1. investigate undefined cards sometimes being added on ties <br />
-2. add card background <br />
-BONUS<br />
-3. give face cards different values <br />
-4. add animation to cards moving around<br />
-5. add sounds<br />
-6. add animation in background<br />
+1. give face cards different values <br />
+2. add animation to cards moving around<br />
+3. add sounds<br />
+4. add animation in background<br />
+5. investigate undefined cards sometimes being added on ties (maybe solved)

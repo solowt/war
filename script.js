@@ -72,10 +72,10 @@ var war = {
   },
   drawPool: function(pair){
     for (var i =0; i<2; i++){
-      $(".pool").append($("<div class='poolcard1'></div>"));
+      $(".pool").append($("<div class='poolcard1 cardback'></div>"));
     }
     for (var i =0; i<2; i++){
-      $(".pool").append($("<div class='poolcard2'></div>"));
+      $(".pool").append($("<div class='poolcard2 cardback'></div>"));
     }
     var card1Html = $(".front").eq(0).html();
     var card2Html = $(".front").eq(1).html();
@@ -191,6 +191,7 @@ var war = {
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
         console.log("player 1 card: "+self.halfDecks[0][0]);
+        $(".topdeck1").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[0][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck1").html(newCardTemplate);
@@ -215,6 +216,7 @@ var war = {
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
         console.log("player 2 card: "+self.halfDecks[1][0]);
+        $(".topdeck2").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[1][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck2").html(newCardTemplate);
@@ -224,8 +226,8 @@ var war = {
           var beforeLength1 = self.halfDecks[0].length;
           var beforeLength2 = self.halfDecks[1].length;
           self.playWar(self.halfDecks[0], self.halfDecks[1])
-          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 2000);
-          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 2000);
+          setTimeout(function(){$(".topdeck2").addClass("hidden cardback");}, 2000);
+          setTimeout(function(){$(".topdeck1").addClass("hidden cardback");}, 2000);
           var subtractString1 = self.halfDecks[0].length-beforeLength1;
           var subtractString2 = self.halfDecks[1].length-beforeLength2;
           $(".deck1counter").html(self.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
