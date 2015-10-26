@@ -8,12 +8,11 @@ User stories for war:<br />
 gh-pages: http://solowt.github.io/war/index.html
 
 things to do:<br />
-1. add score indicator after a win or a lost hand<br />
-2. show winner and loser after game<br />
-3. investigate undefined cards sometimes being added on ties <br />
-4. add card background <br />
+1. show winner and loser after game<br />
+2. investigate undefined cards sometimes being added on ties <br />
+3. add card background <br />
 BONUS<br />
-5. give face cards different values <br />
-6. add animation to cards moving around<br />
-7. add sounds<br />
-8. add animation in background<br />
+4. give face cards different values <br />
+5. add animation to cards moving around<br />
+6. add sounds<br />
+7. add animation in background<br />
