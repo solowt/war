@@ -11,8 +11,9 @@ things to do:<br />
 1. add count over decks <br />
 2. handle card pool/ties graphically<br />
 3. show winner and loser <br />
+4. add card background <br />
 BONUS<br />
-4. add button so computer can play itself (call play war in loop with half second delay? won't be drawn)<br />
-5. add animation to cards moving around<br />
-6. add sounds<br />
-7. add animation in background
+5. add button so computer can play itself (call play war in loop with half second delay? won't be drawn)<br />
+6. add animation to cards moving around<br />
+7. add sounds<br />
+8. add animation in background
