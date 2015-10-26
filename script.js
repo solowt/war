@@ -196,11 +196,15 @@ var war = {
         self.deck1Ready = true;
         self.readyCard1 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
+          var beforeLength1 = self.halfDecks[0].length;
+          var beforeLength2 = self.halfDecks[1].length;
           self.playWar(self.halfDecks[0], self.halfDecks[1])
           setTimeout(function(){$(".topdeck1").addClass("hidden");}, 2000);
           setTimeout(function(){$(".topdeck2").addClass("hidden");}, 2000);
-          $(".deck1counter").html(self.halfDecks[0].length);
-          $(".deck2counter").html(self.halfDecks[1].length);
+          var subtractString1 = self.halfDecks[0].length-beforeLength1;
+          var subtractString2 = self.halfDecks[1].length-beforeLength2;
+          $(".deck1counter").html(self.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
+          $(".deck2counter").html(self.halfDecks[1].length + " " + (Math.sign(subtractString2) == -1 ? "": "+") +" "+ subtractString2);
           console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
           self.readyCard2 = false;
           self.readyCard1 = false;
@@ -216,11 +220,15 @@ var war = {
         self.deck2Ready = true;
         self.readyCard2 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
+          var beforeLength1 = self.halfDecks[0].length;
+          var beforeLength2 = self.halfDecks[1].length;
           self.playWar(self.halfDecks[0], self.halfDecks[1])
           setTimeout(function(){$(".topdeck2").addClass("hidden");}, 2000);
           setTimeout(function(){$(".topdeck1").addClass("hidden");}, 2000);
-          $(".deck1counter").html(self.halfDecks[0].length);
-          $(".deck2counter").html(self.halfDecks[1].length);
+          var subtractString1 = self.halfDecks[0].length-beforeLength1;
+          var subtractString2 = self.halfDecks[1].length-beforeLength2;
+          $(".deck1counter").html(self.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
+          $(".deck2counter").html(self.halfDecks[1].length + " " + (Math.sign(subtractString2) == -1 ? "": "+") +" "+ subtractString2);
           console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
           self.readyCard2 = false;
           self.readyCard1 = false;
