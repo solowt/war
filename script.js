@@ -17,7 +17,6 @@ var war = {
     var valueCard = card.split("-");
     valueArray[0] = parseInt(valueCard[0]);
     valueArray[1] = valueCard[1];
-    console.log(this.suits[3][0] + " " + valueArray[1]);
     if (valueArray[1] == this.suits[0][0]) {
       valueArray[1] = this.suits[0][1];
     }else if (valueArray[1] == this.suits[1][0]) {
@@ -131,11 +130,13 @@ var war = {
             deck2.push(this.cardPool.shift());
             this.clearPool();
           }
+          alert("Player 1 Wins!");
         }else if (deck2.length==0){
           while (this.cardPool.length > 0){
             deck1.push(this.cardPool.shift());
             this.clearPool();
           }
+          alert("Player 2 Wins!");
         }
         this.cardPool.push(deck1.shift());
         this.cardPool.push(deck2.shift());
@@ -189,7 +190,7 @@ var war = {
     });
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
-        console.log(self.halfDecks[0][0]);
+        console.log("player 1 card: "+self.halfDecks[0][0]);
         var valueArray = self.getCardVal(self.halfDecks[0][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck1").html(newCardTemplate);
@@ -213,7 +214,7 @@ var war = {
     });
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
-        console.log(self.halfDecks[1][0]);
+        console.log("player 2 card: "+self.halfDecks[1][0]);
         var valueArray = self.getCardVal(self.halfDecks[1][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck2").html(newCardTemplate);
@@ -249,13 +250,16 @@ var war = {
             self.halfDecks[0].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
             $(".deck2counter").html(self.halfDecks[1].length);
+
           }
+          alert("Player 1 Wins!");
         }else if (self.halfDecks[1].length > self.halfDecks[0].length){
           while(self.cardPool.length>0){
             self.halfDecks[1].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
             $(".deck2counter").html(self.halfDecks[1].length);
           }
+          alert("Player 2 Wins!");
         }
       }
     });
