@@ -14,15 +14,17 @@ var war = {
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   getCardVal: function(card){
     valueArray = [];
-    var valueCard = parseInt(card.split("-")[0]);
-    valueArray[0]= valueCard;
-    if (valueCard[1]=this.suits[0][0]) {
+    var valueCard = card.split("-");
+    valueArray[0] = parseInt(valueCard[0]);
+    valueArray[1] = valueCard[1];
+    console.log(this.suits[3][0] + " " + valueArray[1]);
+    if (valueArray[1] == this.suits[0][0]) {
       valueArray[1] = this.suits[0][1];
-    }else if (valueCard[1]=this.suits[1][0]) {
+    }else if (valueArray[1] == this.suits[1][0]) {
       valueArray[1] = this.suits[1][1];
-    }else if (valueCard[1]=this.suits[2][0]) {
+    }else if (valueArray[1] == this.suits[2][0]) {
       valueArray[1] = this.suits[2][1];
-    }else if (valueCard[1]=this.suits[3][0]) {
+    }else if (valueArray[1] == this.suits[3][0]) {
       valueArray[1] = this.suits[3][1];
     }
     return valueArray;
@@ -76,19 +78,10 @@ var war = {
     for (var i =0; i<2; i++){
       $(".pool").append($("<div class='poolcard2'></div>"));
     }
-      var tieCard1 = $(".pool").append($("<div class='poolcard1'></div>"));
-      var tieCard2 = $(".pool").append($("<div class='poolcard2'></div>"))
-      // tieCard1.html(this.cardTemplate);
-      // tieCard2.html(this.cardTemplate);
-
-    // var valueArray1 = this.getCardVal(pair[0][0]);
-    // var newCardTemplate1 = this.drawCard(self.cardTemplate, valueArray);
-    // var valueArray2 = this.getCardVal(pair[0][1]);
-    // var newCardTemplate2 = this.drawCard(self.cardTemplate, valueArray);
-    // var newCard1 = $(".pool").append($("div class='poolcard'</div>"));
-    // newCard1.html(newCardTemplate1);
-    // var newCard2 = $(".pool").append($("div class='poolcard'</div>"))
-    // newCard2.html(newCardTemplate2);
+    var card1Html = $(".front").eq(0).html();
+    var card2Html = $(".front").eq(1).html();
+    $(".pool").append($("<div class='poolcard1'>"+card1Html+"</div>"));
+    $(".pool").append($("<div class='poolcard2'>"+card2Html+"</div>"))
   },
   clearPool: function(){
     $(".pool").html("");
@@ -267,6 +260,7 @@ var war = {
       self.deck2Ready = false;
       self.readyCard2 = false;
       self.deckCut = false;
+      self.clearPool();
       $(".topdeck2").addClass("hidden");
       $(".topdeck1").addClass("hidden");
       $(".deck1").addClass("hidden");
