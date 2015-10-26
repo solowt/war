@@ -9,6 +9,34 @@
     background: #FBBC05;
     border: 5px dotted red;
 }
+.pool{
+  background: papayawhip;
+  position: relative;
+  border: 2px solid black;
+  width: 600px;
+  height: 140px;
+  top: 350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.poolcard1{
+  background: white;
+  position: relative;
+  border: 2px solid black;
+  width: 64px;
+  height: 90px;
+  top: 10px;
+  float: left;
+}
+.poolcard2{
+  background: white;
+  position: relative;
+  border: 2px solid black;
+  width: 64px;
+  height: 90px;
+  top: 10px;
+  float: right;
+}
 .fight{
   background: white;
   position: relative;
@@ -108,7 +136,7 @@ section{
   border: 2px solid black;
   width: 64px;
   height: 90px;
-  top: 200px;
+  top: 0px;
   margin-left: auto;
   margin-right: auto;
 }

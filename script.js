@@ -69,6 +69,30 @@ var war = {
     var valueCard = deck[0].split("-");
     return valueCard;
   },
+  drawPool: function(pair){
+    for (var i =0; i<2; i++){
+      $(".pool").append($("<div class='poolcard1'></div>"));
+    }
+    for (var i =0; i<2; i++){
+      $(".pool").append($("<div class='poolcard2'></div>"));
+    }
+      var tieCard1 = $(".pool").append($("<div class='poolcard1'></div>"));
+      var tieCard2 = $(".pool").append($("<div class='poolcard2'></div>"))
+      // tieCard1.html(this.cardTemplate);
+      // tieCard2.html(this.cardTemplate);
+
+    // var valueArray1 = this.getCardVal(pair[0][0]);
+    // var newCardTemplate1 = this.drawCard(self.cardTemplate, valueArray);
+    // var valueArray2 = this.getCardVal(pair[0][1]);
+    // var newCardTemplate2 = this.drawCard(self.cardTemplate, valueArray);
+    // var newCard1 = $(".pool").append($("div class='poolcard'</div>"));
+    // newCard1.html(newCardTemplate1);
+    // var newCard2 = $(".pool").append($("div class='poolcard'</div>"))
+    // newCard2.html(newCardTemplate2);
+  },
+  clearPool: function(){
+    $(".pool").html("");
+  },
   compare: function(card1, card2){
     var returnCards=[[],""];
     var valueCard1 = parseInt(card1.split("-")[0]);
@@ -95,24 +119,29 @@ var war = {
       deck1.push(pair[0].shift());
       while (this.cardPool.length > 0){
         deck1.push(this.cardPool.shift());
+        this.clearPool();
       }
     }else if (pair[1] == "player2"){
       deck2.push(pair[0].shift());
       deck2.push(pair[0].shift());
       while (this.cardPool.length > 0){
         deck2.push(this.cardPool.shift());
+        this.clearPool();
       }
     }else if (pair[1] == "tie"){
+      this.drawPool(pair);
       this.cardPool.push(pair[0].shift());
       this.cardPool.push(pair[0].shift());
-      for(var i=0;i<3;i++){
+      for(var i=0;i<2;i++){
         if (deck1.length==0){
           while (this.cardPool.length > 0){
             deck2.push(this.cardPool.shift());
+            this.clearPool();
           }
         }else if (deck2.length==0){
           while (this.cardPool.length > 0){
             deck1.push(this.cardPool.shift());
+            this.clearPool();
           }
         }
         this.cardPool.push(deck1.shift());
@@ -125,7 +154,6 @@ var war = {
     var self = this;
     $("#createDeck").on("click", function(){
       if (!self.playingGame) {
-        console.log("as");
         $(".initdeck").removeClass("hidden");
         self.playingGame = true;
         self.currentDeck = self.makeDeck(13);
@@ -260,13 +288,3 @@ var war = {
   },
 }
 war.addButtonListeners();
-// var deck = war.makeDeck(13);
-// war.shuffleDeck(deck);
-// var splitDecks = war.cutDeck(deck);
-// var i=0;
-// while ((splitDecks[0].length > 0) && (splitDecks[1].length > 0)){
-//   war.playWar(splitDecks[0], splitDecks[1]);
-//   console.log(splitDecks[0].length +" "+splitDecks[1].length);
-//   i++;
-// }
-//   console.log(i)
