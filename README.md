@@ -17,4 +17,8 @@ BONUS<br />
 6. give face cards different values <br />
 7. add animation to cards moving around<br />
 8. add sounds<br />
-9. add animation in background
+9. add animation in background<br />
+
+notes to self:<br />
+-use trigger() method to render computer playing vs itself<br />
+-also add button to trigger a match done manually, in fact tie that button's function to the computer playing function<br />
