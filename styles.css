@@ -5,9 +5,19 @@
   height: 90px;
   background:white;
 }
-.card:hover, .deck1:hover, .deck2:hover, .initdeck:hover, .topdeck1:hover, .topdeck2:hover {
+.card:hover, .deck1:hover, .deck2:hover, .initdeck:hover, .topdeck1:hover, .topdeck2:hover, button:hover, .draw:hover {
     background: #FBBC05;
-    border: 3px dotted red;
+    border: 5px dotted red;
+}
+.fight{
+  background: white;
+  position: relative;
+  border: 2px solid black;
+  width: 50px;
+  height: 50px;
+  top: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #player1Card{
   position: absolute;

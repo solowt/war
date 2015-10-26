@@ -8,6 +8,7 @@ var war = {
   deck2Ready: false, //another boolean to keep track of the game state
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
+  deckCut: false,
   value: "V",
   suit: "S",
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
@@ -124,6 +125,7 @@ var war = {
     var self = this;
     $("#createDeck").on("click", function(){
       if (!self.playingGame) {
+        console.log("as");
         $(".initdeck").removeClass("hidden");
         self.playingGame = true;
         self.currentDeck = self.makeDeck(13);
@@ -135,16 +137,20 @@ var war = {
       }
     });
     $("#cutDeck").on("click", function(){
-      self.deck1Ready = true;
-      self.deck2Ready = true;
-      self.halfDecks = self.cutDeck(self.currentDeck);
-      $(".initdeck").addClass("hidden");
-      $(".deck2").removeClass("hidden");
-      $(".deck1").removeClass("hidden");
-      $(".deck1counter").removeClass("hidden");
-      $(".deck2counter").removeClass("hidden");
-      $(".deck1counter").html(self.halfDecks[0].length);
-      $(".deck2counter").html(self.halfDecks[1].length);
+      if (!self.deckCut) {
+        self.deck1Ready = true;
+        self.deck2Ready = true;
+        self.halfDecks = self.cutDeck(self.currentDeck);
+        $(".initdeck").addClass("hidden");
+        $(".deck2").removeClass("hidden");
+        $(".deck1").removeClass("hidden");
+        $(".deck1counter").removeClass("hidden");
+        $(".deck2counter").removeClass("hidden");
+        $(".deck1counter").html(self.halfDecks[0].length);
+        $(".deck2counter").html(self.halfDecks[1].length);
+        $(".fight").removeClass("hidden");
+        self.deckCut = true;
+      }
     });
     $(".deck1").on("click", function(){
       if (self.deck1Ready == true){
@@ -169,14 +175,14 @@ var war = {
         self.deck1Ready = true;
         self.readyCard1 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
-          self.readyCard2 = false;
-          self.readyCard1 = false;
           self.playWar(self.halfDecks[0], self.halfDecks[1])
-          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 1500);
-          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 1500);
+          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 2000);
+          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 2000);
           $(".deck1counter").html(self.halfDecks[0].length);
           $(".deck2counter").html(self.halfDecks[1].length);
           console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
+          self.readyCard2 = false;
+          self.readyCard1 = false;
         }
       }
     });
@@ -189,17 +195,68 @@ var war = {
         self.deck2Ready = true;
         self.readyCard2 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
-          self.readyCard2 = false;
-          self.readyCard1 = false;
           self.playWar(self.halfDecks[0], self.halfDecks[1])
-          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 1500);
-          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 1500);
+          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 2000);
+          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 2000);
           $(".deck1counter").html(self.halfDecks[0].length);
           $(".deck2counter").html(self.halfDecks[1].length);
           console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
+          self.readyCard2 = false;
+          self.readyCard1 = false;
         }
       }
     });
+
+    $("#draw").on("click", function(){
+      self.playRound();
+    });
+    $("#computer").on("click", function(){
+      if (self.deck1Ready && self.deck2Ready && self.playingGame){
+        while (self.halfDecks[0].length > 0 && self.halfDecks[1].length>0){
+          self.playRound();
+        }
+        if (self.halfDecks[0].length > self.halfDecks[1].length){
+          while(self.cardPool.length>0){
+            self.halfDecks[0].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+          while(self.cardPool.length>0){
+            self.halfDecks[1].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+        }
+      }
+    });
+    $("#newGame").on("click", function(){
+      self.currentDeck = [""];
+      self.halfDecks = [""];
+      self.playingGame = false;
+      self.deck1Ready = false;
+      self.readyCard1 = false;
+      self.deck2Ready = false;
+      self.readyCard2 = false;
+      self.deckCut = false;
+      $(".topdeck2").addClass("hidden");
+      $(".topdeck1").addClass("hidden");
+      $(".deck1").addClass("hidden");
+      $(".deck2").addClass("hidden");
+      $(".initdeck").addClass("hidden");
+      $(".deck1counter").html("");
+      $(".deck2counter").html("");
+      $(".deck1counter").addClass("hidden");
+      $(".deck2counter").addClass("hidden");
+    })
+  },
+  playRound: function(){
+    if (this.deck1Ready && this.deck2Ready && this.playingGame){
+      $(".deck1").trigger("click");
+      $(".deck2").trigger("click");
+      $(".topdeck1").trigger("click");
+      $(".topdeck2").trigger("click");
+    }
   },
 }
 war.addButtonListeners();
