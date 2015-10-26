@@ -8,8 +8,8 @@ User stories for war:<br />
 gh-pages: http://solowt.github.io/war/index.html
 
 things to do:<br />
-1. handle card pool/ties graphically<br />
-2. show winner and loser <br />
+1. add score indicator after a win or a lost hand<br />
+2. show winner and loser after game<br />
 3. investigate undefined cards sometimes being added on ties <br />
 4. add card background <br />
 BONUS<br />
