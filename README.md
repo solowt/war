@@ -6,3 +6,13 @@ User stories for war:<br />
 5. As a user, I want to be able to play against the computer because my friends won't always want to play war.<br />
 
 gh-pages: http://solowt.github.io/war/index.html
+
+things to do:<br />
+1. add count over decks <br />
+2. handle card pool <br />
+3. show winner and loser <br />
+------------------------------------------
+4. add button so computer can play itself<br />
+5. add animation to cards moving around<br />
+6. add sounds<br />
+7. add animation war in background

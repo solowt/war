@@ -7,7 +7,7 @@ var war = {
   deck1Ready: false, //another boolean to keep track of the game state
   deck2Ready: false, //another boolean to keep track of the game state
   readyCard1: false, //another boolean to..
-  readyCard2: false,
+  readyCard2: false, //another boolea...
   value: "V",
   suit: "S",
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
@@ -15,14 +15,14 @@ var war = {
     valueArray = [];
     var valueCard = parseInt(card.split("-")[0]);
     valueArray[0]= valueCard;
-    if (valueCard[1]="Clubs") {
-      valueArray[1] = "&clubs;";
-    }else if (valueCard[1]="Hearts") {
-      valueArray[1] = "&hearts;";
-    }else if (valueCard[1]="Diamonds") {
-      valueArray[1] = "&diams;";
-    }else if (valueCard[1]="Spades") {
-      valueArray[1] = "&spades;";
+    if (valueCard[1]=this.suits[0][0]) {
+      valueArray[1] = this.suits[0][1];
+    }else if (valueCard[1]=this.suits[1][0]) {
+      valueArray[1] = this.suits[1][1];
+    }else if (valueCard[1]=this.suits[2][0]) {
+      valueArray[1] = this.suits[2][1];
+    }else if (valueCard[1]=this.suits[3][0]) {
+      valueArray[1] = this.suits[3][1];
     }
     return valueArray;
   },
@@ -192,9 +192,7 @@ var war = {
         }
       }
     });
-
   },
-
 }
 war.addButtonListeners();
 // var deck = war.makeDeck(13);
