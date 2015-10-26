@@ -8,12 +8,13 @@ User stories for war:<br />
 gh-pages: http://solowt.github.io/war/index.html
 
 things to do:<br />
-1. add count over decks <br />
+1. add count over decks X<br />
 2. handle card pool/ties graphically<br />
 3. show winner and loser <br />
 4. add card background <br />
 BONUS<br />
 5. add button so computer can play itself (call play war in loop with half second delay? won't be drawn)<br />
-6. add animation to cards moving around<br />
-7. add sounds<br />
-8. add animation in background
+6. give face cards different values <br />
+7. add animation to cards moving around<br />
+8. add sounds<br />
+9. add animation in background

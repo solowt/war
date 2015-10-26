@@ -141,6 +141,10 @@ var war = {
       $(".initdeck").addClass("hidden");
       $(".deck2").removeClass("hidden");
       $(".deck1").removeClass("hidden");
+      $(".deck1counter").removeClass("hidden");
+      $(".deck2counter").removeClass("hidden");
+      $(".deck1counter").html(self.halfDecks[0].length);
+      $(".deck2counter").html(self.halfDecks[1].length);
     });
     $(".deck1").on("click", function(){
       if (self.deck1Ready == true){
@@ -170,6 +174,8 @@ var war = {
           self.playWar(self.halfDecks[0], self.halfDecks[1])
           setTimeout(function(){$(".topdeck1").addClass("hidden");}, 1500);
           setTimeout(function(){$(".topdeck2").addClass("hidden");}, 1500);
+          $(".deck1counter").html(self.halfDecks[0].length);
+          $(".deck2counter").html(self.halfDecks[1].length);
           console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
         }
       }
@@ -188,6 +194,8 @@ var war = {
           self.playWar(self.halfDecks[0], self.halfDecks[1])
           setTimeout(function(){$(".topdeck2").addClass("hidden");}, 1500);
           setTimeout(function(){$(".topdeck1").addClass("hidden");}, 1500);
+          $(".deck1counter").html(self.halfDecks[0].length);
+          $(".deck2counter").html(self.halfDecks[1].length);
           console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
         }
       }

@@ -1,7 +1,7 @@
 .card{
   position: relative;
   border: 2px solid black;
-  width: 50px;
+  width: 64px;
   height: 90px;
   background:white;
 }
@@ -17,12 +17,12 @@
 }
 .spotB1  {
   position: relative;
-  left:18px;
+  left:26px;
 }
 .index{
   /*margin: auto auto auto 0;*/
   position: relative;
-  left: 4px;
+  left: 6px;
 }
 section{
   border: 10px solid black;
@@ -36,7 +36,7 @@ section{
   background: white;
   position: absolute;
   border: 2px solid black;
-  width: 50px;
+  width: 64px;
   height: 90px;
   top: 200px;
   left: 100px;
@@ -45,16 +45,34 @@ section{
   background: white;
   position: absolute;
   border: 2px solid black;
-  width: 50px;
+  width: 64px;
   height: 90px;
   top: 200px;
   right: 100px;
+}
+.deck1counter{
+  position: absolute;
+  border: 2px solid black;
+  width: 64px;
+  height: 20px;
+  top: 160px;
+  left: 100px;
+
+}
+.deck2counter{
+  position: absolute;
+  border: 2px solid black;
+  width: 64px;
+  height: 20px;
+  top: 160px;
+  right: 100px;
+
 }
 .topdeck1{
   background: white;
   position: absolute;
   border: 2px solid black;
-  width: 50px;
+  width: 64px;
   height: 90px;
   top: 200px;
   left: 300px;
@@ -64,7 +82,7 @@ section{
   background: white;
   position: absolute;
   border: 2px solid black;
-  width: 50px;
+  width: 64px;
   height: 90px;
   top: 200px;
   right: 300px;
@@ -74,7 +92,7 @@ section{
   background: white;
   position: relative;
   border: 2px solid black;
-  width: 50px;
+  width: 64px;
   height: 90px;
   top: 200px;
   margin-left: auto;
