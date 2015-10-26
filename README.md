@@ -13,7 +13,6 @@ things to do:<br />
 3. investigate undefined cards sometimes being added on ties <br />
 4. add card background <br />
 BONUS<br />
-4. add button so computer can play itself (call play war in loop with half second delay? won't be drawn)<br />
 5. give face cards different values <br />
 6. add animation to cards moving around<br />
 7. add sounds<br />
