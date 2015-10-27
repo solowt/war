@@ -13,3 +13,5 @@ things to do:
 1. add animation to cards moving around "$("div").animate({left: '250px'});"
 
 2. go over code, try to collapse some parts of it.
+
+3. investigage undefined cards
