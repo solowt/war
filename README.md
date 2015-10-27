@@ -8,8 +8,7 @@ User stories for war:<br />
 gh-pages: http://solowt.github.io/war/index.html
 
 things to do:<br />
-1. give face cards different values <br />
+1. add sounds (added shuffle, maybe find 2 more to start with)<br />
 2. add animation to cards moving around<br />
-3. add sounds (added shuffle, maybe find 2 more to start with)<br />
-4. add animation in background<br />
-5. investigate undefined cards sometimes being added on ties (maybe solved)
+3. add animation in background<br />
+4. investigate undefined cards sometimes being added on ties (added prints to show when it ends, think it has to do with ending on a tie)

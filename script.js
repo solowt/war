@@ -13,8 +13,8 @@ var war = {
   loadSounds: function(){
     shuffleSound = new Audio("sounds/shuffle.mp3");
     cutDeck = new Audio("sounds/cutDeck.mp3");
-    dealCard1 = new Audio("sounds/dealCard");
-    dealCard2 = new Audio("sounds/dealCard2");
+    dealCard1 = new Audio("sounds/dealCard.mp3");
+    dealCard2 = new Audio("sounds/dealCard2.mp3");
   },
   getCardVal: function(card){
     valueArray = [];
