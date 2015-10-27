@@ -11,7 +11,10 @@ var war = {
   deckCut: false,
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   loadSounds: function(){
-    shuffleSound = new Audio("sounds/shuffle.mp3")
+    shuffleSound = new Audio("sounds/shuffle.mp3");
+    cutDeck = new Audio("sounds/cutDeck.mp3");
+    dealCard1 = new Audio("sounds/dealCard");
+    dealCard2 = new Audio("sounds/dealCard2");
   },
   getCardVal: function(card){
     valueArray = [];
