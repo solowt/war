@@ -9,7 +9,7 @@ var war = {
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
   deckCut: false,
-  cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
+  cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB2'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   loadSounds: function(){
     shuffleSound = new Audio("sounds/shuffle.mp3");
     cutDeck = new Audio("sounds/cutDeck.mp3");
@@ -96,8 +96,13 @@ var war = {
     }
     var card1Html = $(".front").eq(0).html();
     var card2Html = $(".front").eq(1).html();
-    $(".pool").append($("<div class='poolcard1'>"+card1Html+"</div>"));
-    $(".pool").append($("<div class='poolcard2'>"+card2Html+"</div>"))
+    $(".pool").append($("<div class='poolcard1 newpool'>"+card1Html+"</div>"));
+    $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"))
+    console.log($(".spotB2").html());
+    if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
+      $(".newpool").css("color", "red");
+    }
+
   },
   clearPool: function(){
     $(".pool").html("");
@@ -214,6 +219,9 @@ var war = {
         var valueArray = self.getCardVal(self.halfDecks[0][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck1").html(newCardTemplate);
+        if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
+          $(".topdeck2").css("color", "red");
+        }
         self.deck1Ready = true;
         self.readyCard1 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
@@ -239,6 +247,10 @@ var war = {
         var valueArray = self.getCardVal(self.halfDecks[1][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck2").html(newCardTemplate);
+        console.log(valueArray[1]);
+        if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
+          $(".topdeck2").css("color", "red");
+        }
         self.deck2Ready = true;
         self.readyCard2 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
