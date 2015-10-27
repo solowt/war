@@ -125,6 +125,9 @@ var war = {
     return returnCards;
   },
   playWar: function(deck1, deck2){
+    if(this.checkWinner()){
+      return;
+    }
     if (Math.random()<.5){
       dealCard1.play();
     }else{
@@ -250,7 +253,6 @@ var war = {
       }
     });
     $(".topdeck1").on("click", function(){
-      self.checkWinner();
       if (self.playingGame == true && self.deck1Ready == false){
         self.computerReady = false;
         if (Math.random()<.5){
@@ -272,10 +274,8 @@ var war = {
         self.readyCard1 = true;
         self.startWar();
       }
-      self.checkWinner();
     });
     $(".topdeck2").on("click", function(){
-      self.checkWinner();
       if (self.playingGame == true && self.deck2Ready == false){
         self.computerReady = false;
         if (Math.random()<.5){
@@ -297,7 +297,6 @@ var war = {
         self.readyCard2 = true;
         self.startWar();
       }
-      self.checkWinner();
     });
 
     $("#draw").on("click", function(){
