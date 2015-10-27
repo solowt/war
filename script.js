@@ -86,11 +86,6 @@ var war = {
     bothDecks[1]=halfDeck;
     return bothDecks;
   },
-  //is this used?
-  getCardInfo: function(deck){
-    var valueCard = deck[0].split("-");
-    return valueCard;
-  },
   drawPool: function(){
     for (var i =0; i<2; i++){
       $(".pool").append($("<div class='poolcard1 cardback'></div>"));
@@ -167,6 +162,50 @@ var war = {
     }
     return;
   },
+  checkWinner: function(){
+    if (this.halfDecks[0].length == 0 || this.halfDecks[1].length == 0){
+      clearInterval(this.intervalId);
+      if (this.halfDecks[0].length > this.halfDecks[1].length){
+        this.playingGame = false;
+        this.clearPool();
+        while(this.cardPool.length>0){
+          this.halfDecks[0].push(this.cardPool.shift());
+          $(".deck1counter").html(this.halfDecks[0].length);
+          $(".deck2counter").html(this.halfDecks[1].length);
+        }
+        alert("Player 1 Wins!");
+        return true;
+      }else if (this.halfDecks[1].length > this.halfDecks[0].length){
+        this.playingGame = false;
+        this.clearPool();
+        while(this.cardPool.length>0){
+          this.halfDecks[1].push(this.cardPool.shift());
+          $(".deck1counter").html(this.halfDecks[0].length);
+          $(".deck2counter").html(this.halfDecks[1].length);
+        }
+        alert("Player 2 Wins!");
+        return true;
+      }
+    }
+    return false;
+  },
+  startWar: function(){
+    if (this.readyCard2 && this.readyCard1){
+      this.readyToDeal = false;
+      var beforeLength1 = this.halfDecks[0].length;
+      var beforeLength2 = this.halfDecks[1].length;
+      this.playWar(this.halfDecks[0], this.halfDecks[1])
+      setTimeout(function(){$(".topdeck1").addClass("hidden cardback");}, 2000);
+      setTimeout(function(){$(".topdeck2").addClass("hidden cardback");}, 2000);
+      var subtractString1 = this.halfDecks[0].length-beforeLength1;
+      var subtractString2 = this.halfDecks[1].length-beforeLength2;
+      $(".deck1counter").html(this.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
+      $(".deck2counter").html(this.halfDecks[1].length + " " + (Math.sign(subtractString2) == -1 ? "": "+") +" "+ subtractString2);
+      console.log(this.halfDecks[0].length +" "+this.halfDecks[1].length);
+      this.readyCard2 = false;
+      this.readyCard1 = false;
+    }
+  },
   addButtonListeners: function(){
     var self = this;
     $("#createDeck").on("click", function(){
@@ -212,27 +251,7 @@ var war = {
       }
     });
     $(".topdeck1").on("click", function(){
-      if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
-        if (self.halfDecks[0].length > self.halfDecks[1].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[0].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          alert("Player 1 Wins!");
-        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[1].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          alert("Player 2 Wins!");
-        }
-      }
+      self.checkWinner();
       if (self.playingGame == true && self.deck1Ready == false){
         self.computerReady = false;
         if (Math.random()<.5){
@@ -246,48 +265,18 @@ var war = {
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck1").html(newCardTemplate);
         if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
-          $(".topdeck2").css("color", "red");
+          $(".topdeck1").css("color", "red");
+        }else if (valueArray[1] == "&clubs;" || valueArray[1] == "&spades;"){
+          $(".topdeck1").css("color", "black");
         }
         self.deck1Ready = true;
         self.readyCard1 = true;
-        if (self.readyCard2 == true && self.readyCard1 == true){
-          var beforeLength1 = self.halfDecks[0].length;
-          var beforeLength2 = self.halfDecks[1].length;
-          self.playWar(self.halfDecks[0], self.halfDecks[1])
-          setTimeout(function(){$(".topdeck1").addClass("hidden cardback");}, 2000);
-          setTimeout(function(){$(".topdeck2").addClass("hidden cardback");}, 2000);
-          var subtractString1 = self.halfDecks[0].length-beforeLength1;
-          var subtractString2 = self.halfDecks[1].length-beforeLength2;
-          $(".deck1counter").html(self.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
-          $(".deck2counter").html(self.halfDecks[1].length + " " + (Math.sign(subtractString2) == -1 ? "": "+") +" "+ subtractString2);
-          console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
-          self.readyCard2 = false;
-          self.readyCard1 = false;
-        }
+        self.startWar();
       }
+      self.checkWinner();
     });
     $(".topdeck2").on("click", function(){
-      if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
-        if (self.halfDecks[0].length > self.halfDecks[1].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[0].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          alert("Player 1 Wins!");
-        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[1].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          alert("Player 2 Wins!");
-        }
-      }
+      self.checkWinner();
       if (self.playingGame == true && self.deck2Ready == false){
         self.computerReady = false;
         if (Math.random()<.5){
@@ -302,24 +291,14 @@ var war = {
         $(".topdeck2").html(newCardTemplate);
         if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
           $(".topdeck2").css("color", "red");
+        }else if (valueArray[1] == "&clubs;" || valueArray[1] == "&spades;"){
+          $(".topdeck2").css("color", "black");
         }
         self.deck2Ready = true;
         self.readyCard2 = true;
-        if (self.readyCard2 == true && self.readyCard1 == true){
-          var beforeLength1 = self.halfDecks[0].length;
-          var beforeLength2 = self.halfDecks[1].length;
-          self.playWar(self.halfDecks[0], self.halfDecks[1])
-          setTimeout(function(){$(".topdeck2").addClass("hidden cardback");}, 2000);
-          setTimeout(function(){$(".topdeck1").addClass("hidden cardback");}, 2000);
-          var subtractString1 = self.halfDecks[0].length-beforeLength1;
-          var subtractString2 = self.halfDecks[1].length-beforeLength2;
-          $(".deck1counter").html(self.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
-          $(".deck2counter").html(self.halfDecks[1].length + " " + (Math.sign(subtractString2) == -1 ? "": "+") +" "+ subtractString2);
-          console.log(self.halfDecks[0].length +" "+self.halfDecks[1].length);
-          self.readyCard2 = false;
-          self.readyCard1 = false;
-        }
+        self.startWar();
       }
+      self.checkWinner();
     });
 
     $("#draw").on("click", function(){
@@ -328,27 +307,7 @@ var war = {
     $("#computer").on("click", function(){
       if (self.deck1Ready && self.deck2Ready && self.playingGame && self.computerReady){
         self.intervalId = setInterval(function(){
-          if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
-            clearInterval(self.intervalId);
-            if (self.halfDecks[0].length > self.halfDecks[1].length){
-              self.playingGame = false;
-              self.clearPool();
-              while(self.cardPool.length>0){
-                self.halfDecks[0].push(self.cardPool.shift());
-                $(".deck1counter").html(self.halfDecks[0].length);
-                $(".deck2counter").html(self.halfDecks[1].length);
-              }
-              alert("Player 1 Wins!");
-            }else if (self.halfDecks[1].length > self.halfDecks[0].length){
-              self.playingGame = false;
-              self.clearPool();
-              while(self.cardPool.length>0){
-                self.halfDecks[1].push(self.cardPool.shift());
-                $(".deck1counter").html(self.halfDecks[0].length);
-                $(".deck2counter").html(self.halfDecks[1].length);
-              }
-              alert("Player 2 Wins!");
-            }
+          if (self.checkWinner() == true){
             return;
           }
           self.playRound();

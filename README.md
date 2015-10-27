@@ -10,8 +10,6 @@ gh-pages: http://solowt.github.io/war/index.html
 
 things to do:
 
-1. add animation to cards moving around
+1. add animation to cards moving around "$("div").animate({left: '250px'});"
 
-2. add animation in background
-
-3. look into undefined cards on tie (check pool structure)
+2. go over code, try to collapse some parts of it.
