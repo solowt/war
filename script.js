@@ -31,6 +31,18 @@ var war = {
   },
   drawCard: function(string, valueArray) {
     returnString = "";
+    valueArray[0] = parseInt(valueArray[0]);
+    if (valueArray[0]<=8){
+      valueArray[0]+=2;
+    }else if(valueArray[0] == 9){
+      valueArray[0] = 'J';
+    }else if (valueArray[0] == 10){
+      valueArray[0] = 'Q';
+    }else if (valueArray[0] == 11){
+      valueArray[0] = 'K';
+    }else if (valueArray[0]==12){
+      valueArray[0] = 'A';
+    }
     returnString = string.replace(/X/g, valueArray[0]);
     returnString = returnString.replace(/Y/g, valueArray[1]);
     return returnString;
@@ -128,12 +140,14 @@ var war = {
       this.cardPool.push(pair[0].shift());
       for(var i=0;i<2;i++){
         if (deck1.length==0){
+          console.log("1");
           while (this.cardPool.length > 0){
             deck2.push(this.cardPool.shift());
             this.clearPool();
           }
           alert("Player 1 Wins!");
         }else if (deck2.length==0){
+          console.log("2");
           while (this.cardPool.length > 0){
             deck1.push(this.cardPool.shift());
             this.clearPool();
@@ -250,6 +264,7 @@ var war = {
           self.playRound();
         }
         if (self.halfDecks[0].length > self.halfDecks[1].length){
+          console.log("3");
           while(self.cardPool.length>0){
             self.halfDecks[0].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
@@ -258,6 +273,7 @@ var war = {
           }
           alert("Player 1 Wins!");
         }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+          console.log("4");
           while(self.cardPool.length>0){
             self.halfDecks[1].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);

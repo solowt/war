@@ -27,6 +27,7 @@
   height: 90px;
   top: 10px;
   float: left;
+  margin-left: -40px;
 }
 .poolcard2{
   background: white;
@@ -36,6 +37,7 @@
   height: 90px;
   top: 10px;
   float: right;
+  margin-right: -40px;
 }
 .fight{
   background: white;
