@@ -101,7 +101,6 @@ var war = {
     if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
       $(".newpool").css("color", "red");
     }
-
   },
   clearPool: function(){
     $(".pool").html("");
