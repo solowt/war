@@ -10,8 +10,6 @@ gh-pages: http://solowt.github.io/war/index.html
 
 things to do:
 
-1. setTimeout
+1. add animation to cards moving around
 
-2. add animation to cards moving around
-
-3. add animation in background
+2. add animation in background

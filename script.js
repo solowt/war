@@ -9,6 +9,8 @@ var war = {
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
   deckCut: false,
+  computerReady: true,
+  intervalId: null, //will hold setInterval timer ID
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB2'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   loadSounds: function(){
     shuffleSound = new Audio("sounds/shuffle.mp3");
@@ -196,14 +198,56 @@ var war = {
       }
     });
     $(".deck1").on("click", function(){
-      if (self.deck1Ready == true && self.playingGame){
+      if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
+        if (self.halfDecks[0].length > self.halfDecks[1].length){
+          self.playingGame = false;
+          self.clearPool();
+          while(self.cardPool.length>0){
+            self.halfDecks[0].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+          alert("Player 1 Wins!");
+        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+          self.playingGame = false;
+          self.clearPool();
+          while(self.cardPool.length>0){
+            self.halfDecks[1].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+          //TODO add game over check to other listeners
+          alert("Player 2 Wins!");
+        }
+      }else if(self.deck1Ready == true && self.playingGame){
         $(".topdeck1").html("");
         $(".topdeck1").removeClass("hidden");
         self.deck1Ready = false;
       }
     });
     $(".deck2").on("click", function(){
-      if (self.deck2Ready == true && self.playingGame){
+      if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
+        if (self.halfDecks[0].length > self.halfDecks[1].length){
+          self.playingGame = false;
+          self.clearPool();
+          while(self.cardPool.length>0){
+            self.halfDecks[0].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+          alert("Player 1 Wins!");
+        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+          self.playingGame = false;
+          self.clearPool();
+          while(self.cardPool.length>0){
+            self.halfDecks[1].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+          //TODO add game over check to other listeners
+          alert("Player 2 Wins!");
+        }
+      }else if (self.deck2Ready == true && self.playingGame){
         $(".topdeck2").html("");
         $(".topdeck2").removeClass("hidden");
         self.deck2Ready = false;
@@ -211,6 +255,7 @@ var war = {
     });
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
+        self.computerReady = false;
         if (Math.random()<.5){
           dealCard1.play();
         }else{
@@ -244,6 +289,7 @@ var war = {
     });
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
+        self.computerReady = false;
         if (Math.random()<.5){
           dealCard1.play();
         }else{
@@ -280,11 +326,15 @@ var war = {
       self.playRound();
     });
     $("#computer").on("click", function(){
-      if (self.deck1Ready && self.deck2Ready && self.playingGame){
-        while (self.halfDecks[0].length > 0 && self.halfDecks[1].length>0){
-          //TODO setTimeout here maybe promises
+      if (self.deck1Ready && self.deck2Ready && self.playingGame && self.computerReady){
+        self.intervalId = setInterval(function(){
+          if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
+            clearInterval(self.intervalId);
+            return;
+          }
           self.playRound();
-        }
+        }, 200);
+
         if (self.halfDecks[0].length > self.halfDecks[1].length){
           self.playingGame = false;
           self.clearPool();
@@ -316,6 +366,7 @@ var war = {
       self.deck2Ready = false;
       self.readyCard2 = false;
       self.deckCut = false;
+      self.computerReady = true;
       self.clearPool();
       $(".topdeck2").addClass("hidden");
       $(".topdeck1").addClass("hidden");
