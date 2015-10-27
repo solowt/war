@@ -6,9 +6,7 @@ User stories for war:<br />
 5. As a user, I want to be able to play against the computer because my friends won't always want to play war.<br />
 
 gh-pages: http://solowt.github.io/war/index.html
-
+s
 things to do:<br />
-1. add sounds (added shuffle, maybe find 2 more to start with)<br />
-2. add animation to cards moving around<br />
-3. add animation in background<br />
-4. investigate undefined cards sometimes being added on ties (added prints to show when it ends, think it has to do with ending on a tie)
+1. add animation to cards moving around<br />
+2. add animation in background<br />

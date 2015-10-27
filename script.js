@@ -284,6 +284,7 @@ var war = {
         }
         if (self.halfDecks[0].length > self.halfDecks[1].length){
           self.playingGame = false;
+          self.clearPool();
           while(self.cardPool.length>0){
             self.halfDecks[0].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
@@ -293,6 +294,7 @@ var war = {
           alert("Player 1 Wins!");
         }else if (self.halfDecks[1].length > self.halfDecks[0].length){
           self.playingGame = false;
+          self.clearPool();
           while(self.cardPool.length>0){
             self.halfDecks[1].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
