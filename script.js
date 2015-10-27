@@ -84,6 +84,7 @@ var war = {
     bothDecks[1]=halfDeck;
     return bothDecks;
   },
+  //is this used?
   getCardInfo: function(deck){
     var valueCard = deck[0].split("-");
     return valueCard;
@@ -98,7 +99,8 @@ var war = {
     var card1Html = $(".front").eq(0).html();
     var card2Html = $(".front").eq(1).html();
     $(".pool").append($("<div class='poolcard1 newpool'>"+card1Html+"</div>"));
-    $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"))
+    $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"));
+    //check this
     if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
       $(".newpool").css("color", "red");
     }
@@ -280,6 +282,7 @@ var war = {
     $("#computer").on("click", function(){
       if (self.deck1Ready && self.deck2Ready && self.playingGame){
         while (self.halfDecks[0].length > 0 && self.halfDecks[1].length>0){
+          //TODO setTimeout here maybe promises
           self.playRound();
         }
         if (self.halfDecks[0].length > self.halfDecks[1].length){
@@ -289,7 +292,6 @@ var war = {
             self.halfDecks[0].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
             $(".deck2counter").html(self.halfDecks[1].length);
-
           }
           alert("Player 1 Wins!");
         }else if (self.halfDecks[1].length > self.halfDecks[0].length){
@@ -300,6 +302,7 @@ var war = {
             $(".deck1counter").html(self.halfDecks[0].length);
             $(".deck2counter").html(self.halfDecks[1].length);
           }
+          //TODO add game over check to other listeners
           alert("Player 2 Wins!");
         }
       }

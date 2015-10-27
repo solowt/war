@@ -6,7 +6,12 @@ User stories for war:<br />
 5. As a user, I want to be able to play against the computer because my friends won't always want to play war.<br />
 
 gh-pages: http://solowt.github.io/war/index.html
-s
-things to do:<br />
-1. add animation to cards moving around<br />
-2. add animation in background<br />
+
+
+things to do:
+
+1. setTimeout
+
+2. add animation to cards moving around
+
+3. add animation in background
