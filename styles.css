@@ -7,7 +7,7 @@
 }
 .card:hover, .deck1:hover, .deck2:hover, .initdeck:hover, .topdeck1:hover, .topdeck2:hover, button:hover, .draw:hover {
     background: #FBBC05;
-    border: 5px dotted red;
+    border: 5px dotted black;
 }
 .pool{
   background: papayawhip;

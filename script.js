@@ -9,9 +9,10 @@ var war = {
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
   deckCut: false,
-  value: "V",
-  suit: "S",
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
+  loadSounds: function(){
+    shuffleSound = new Audio("sounds/shuffle.mp3")
+  },
   getCardVal: function(card){
     valueArray = [];
     var valueCard = card.split("-");
@@ -45,6 +46,7 @@ var war = {
     return newDeck;
   },
   shuffleDeck: function(deck) {
+    shuffleSound.play();
     var j, k;
     var temp;
     for (j = 0; j < deck.length; j++) {
@@ -295,4 +297,5 @@ var war = {
     }
   },
 }
+war.loadSounds();
 war.addButtonListeners();
