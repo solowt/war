@@ -73,6 +73,7 @@ var war = {
     return deck;
   },
   cutDeck: function(deck){
+    cutDeck.play();
     var bothDecks = [];
     var halfDeck = [];
     var halfDeckLength=deck.length/2;
@@ -98,7 +99,6 @@ var war = {
     var card2Html = $(".front").eq(1).html();
     $(".pool").append($("<div class='poolcard1 newpool'>"+card1Html+"</div>"));
     $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"))
-    console.log($(".spotB2").html());
     if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
       $(".newpool").css("color", "red");
     }
@@ -127,6 +127,11 @@ var war = {
     return returnCards;
   },
   playWar: function(deck1, deck2){
+    if (Math.random()<.5){
+      dealCard1.play();
+    }else{
+      dealCard2.play();
+    }
     var pair = this.compare(deck1.shift(), deck2.shift());
     if (pair[1] == "player1"){
       deck1.push(pair[0].shift());
@@ -199,14 +204,14 @@ var war = {
       }
     });
     $(".deck1").on("click", function(){
-      if (self.deck1Ready == true){
+      if (self.deck1Ready == true && self.playingGame){
         $(".topdeck1").html("");
         $(".topdeck1").removeClass("hidden");
         self.deck1Ready = false;
       }
     });
     $(".deck2").on("click", function(){
-      if (self.deck2Ready == true){
+      if (self.deck2Ready == true && self.playingGame){
         $(".topdeck2").html("");
         $(".topdeck2").removeClass("hidden");
         self.deck2Ready = false;
@@ -214,6 +219,11 @@ var war = {
     });
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
+        if (Math.random()<.5){
+          dealCard1.play();
+        }else{
+          dealCard2.play();
+        }
         console.log("player 1 card: "+self.halfDecks[0][0]);
         $(".topdeck1").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[0][0]);
@@ -242,12 +252,16 @@ var war = {
     });
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
+        if (Math.random()<.5){
+          dealCard1.play();
+        }else{
+          dealCard2.play();
+        }
         console.log("player 2 card: "+self.halfDecks[1][0]);
         $(".topdeck2").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[1][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck2").html(newCardTemplate);
-        console.log(valueArray[1]);
         if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
           $(".topdeck2").css("color", "red");
         }
@@ -280,6 +294,7 @@ var war = {
         }
         if (self.halfDecks[0].length > self.halfDecks[1].length){
           console.log("3");
+          self.playingGame = false;
           while(self.cardPool.length>0){
             self.halfDecks[0].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
@@ -289,6 +304,7 @@ var war = {
           alert("Player 1 Wins!");
         }else if (self.halfDecks[1].length > self.halfDecks[0].length){
           console.log("4");
+          self.playingGame = false;
           while(self.cardPool.length>0){
             self.halfDecks[1].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
