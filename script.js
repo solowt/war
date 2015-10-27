@@ -9,9 +9,12 @@ var war = {
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
   deckCut: false,
-  cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
+  cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB2'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   loadSounds: function(){
-    shuffleSound = new Audio("sounds/shuffle.mp3")
+    shuffleSound = new Audio("sounds/shuffle.mp3");
+    cutDeck = new Audio("sounds/cutDeck.mp3");
+    dealCard1 = new Audio("sounds/dealCard.mp3");
+    dealCard2 = new Audio("sounds/dealCard2.mp3");
   },
   getCardVal: function(card){
     valueArray = [];
@@ -31,6 +34,18 @@ var war = {
   },
   drawCard: function(string, valueArray) {
     returnString = "";
+    valueArray[0] = parseInt(valueArray[0]);
+    if (valueArray[0]<=8){
+      valueArray[0]+=2;
+    }else if(valueArray[0] == 9){
+      valueArray[0] = 'J';
+    }else if (valueArray[0] == 10){
+      valueArray[0] = 'Q';
+    }else if (valueArray[0] == 11){
+      valueArray[0] = 'K';
+    }else if (valueArray[0]==12){
+      valueArray[0] = 'A';
+    }
     returnString = string.replace(/X/g, valueArray[0]);
     returnString = returnString.replace(/Y/g, valueArray[1]);
     return returnString;
@@ -58,6 +73,7 @@ var war = {
     return deck;
   },
   cutDeck: function(deck){
+    cutDeck.play();
     var bothDecks = [];
     var halfDeck = [];
     var halfDeckLength=deck.length/2;
@@ -72,7 +88,7 @@ var war = {
     var valueCard = deck[0].split("-");
     return valueCard;
   },
-  drawPool: function(pair){
+  drawPool: function(){
     for (var i =0; i<2; i++){
       $(".pool").append($("<div class='poolcard1 cardback'></div>"));
     }
@@ -81,8 +97,12 @@ var war = {
     }
     var card1Html = $(".front").eq(0).html();
     var card2Html = $(".front").eq(1).html();
-    $(".pool").append($("<div class='poolcard1'>"+card1Html+"</div>"));
-    $(".pool").append($("<div class='poolcard2'>"+card2Html+"</div>"))
+    $(".pool").append($("<div class='poolcard1 newpool'>"+card1Html+"</div>"));
+    $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"))
+    if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
+      $(".newpool").css("color", "red");
+    }
+
   },
   clearPool: function(){
     $(".pool").html("");
@@ -107,6 +127,11 @@ var war = {
     return returnCards;
   },
   playWar: function(deck1, deck2){
+    if (Math.random()<.5){
+      dealCard1.play();
+    }else{
+      dealCard2.play();
+    }
     var pair = this.compare(deck1.shift(), deck2.shift());
     if (pair[1] == "player1"){
       deck1.push(pair[0].shift());
@@ -123,25 +148,17 @@ var war = {
         this.clearPool();
       }
     }else if (pair[1] == "tie"){
-      this.drawPool(pair);
-      this.cardPool.push(pair[0].shift());
-      this.cardPool.push(pair[0].shift());
-      for(var i=0;i<2;i++){
-        if (deck1.length==0){
-          while (this.cardPool.length > 0){
-            deck2.push(this.cardPool.shift());
-            this.clearPool();
-          }
-          alert("Player 1 Wins!");
-        }else if (deck2.length==0){
-          while (this.cardPool.length > 0){
-            deck1.push(this.cardPool.shift());
-            this.clearPool();
-          }
-          alert("Player 2 Wins!");
+      this.drawPool();
+      if (pair[0]){
+        for (var j=0; j<2; j++){
+          this.cardPool.push(pair[0].shift());
         }
-        this.cardPool.push(deck1.shift());
-        this.cardPool.push(deck2.shift());
+      }
+      if (pair[0]){
+        for(var i=0;i<2;i++){
+          this.cardPool.push(deck1.shift());
+          this.cardPool.push(deck2.shift());
+        }
       }
     }
     return;
@@ -177,14 +194,14 @@ var war = {
       }
     });
     $(".deck1").on("click", function(){
-      if (self.deck1Ready == true){
+      if (self.deck1Ready == true && self.playingGame){
         $(".topdeck1").html("");
         $(".topdeck1").removeClass("hidden");
         self.deck1Ready = false;
       }
     });
     $(".deck2").on("click", function(){
-      if (self.deck2Ready == true){
+      if (self.deck2Ready == true && self.playingGame){
         $(".topdeck2").html("");
         $(".topdeck2").removeClass("hidden");
         self.deck2Ready = false;
@@ -192,19 +209,27 @@ var war = {
     });
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
+        if (Math.random()<.5){
+          dealCard1.play();
+        }else{
+          dealCard2.play();
+        }
         console.log("player 1 card: "+self.halfDecks[0][0]);
         $(".topdeck1").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[0][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck1").html(newCardTemplate);
+        if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
+          $(".topdeck2").css("color", "red");
+        }
         self.deck1Ready = true;
         self.readyCard1 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
           var beforeLength1 = self.halfDecks[0].length;
           var beforeLength2 = self.halfDecks[1].length;
           self.playWar(self.halfDecks[0], self.halfDecks[1])
-          setTimeout(function(){$(".topdeck1").addClass("hidden");}, 2000);
-          setTimeout(function(){$(".topdeck2").addClass("hidden");}, 2000);
+          setTimeout(function(){$(".topdeck1").addClass("hidden cardback");}, 2000);
+          setTimeout(function(){$(".topdeck2").addClass("hidden cardback");}, 2000);
           var subtractString1 = self.halfDecks[0].length-beforeLength1;
           var subtractString2 = self.halfDecks[1].length-beforeLength2;
           $(".deck1counter").html(self.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
@@ -217,11 +242,19 @@ var war = {
     });
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
+        if (Math.random()<.5){
+          dealCard1.play();
+        }else{
+          dealCard2.play();
+        }
         console.log("player 2 card: "+self.halfDecks[1][0]);
         $(".topdeck2").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[1][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
         $(".topdeck2").html(newCardTemplate);
+        if (valueArray[1] == "&hearts;" || valueArray[1] == "&diams;"){
+          $(".topdeck2").css("color", "red");
+        }
         self.deck2Ready = true;
         self.readyCard2 = true;
         if (self.readyCard2 == true && self.readyCard1 == true){
@@ -250,6 +283,8 @@ var war = {
           self.playRound();
         }
         if (self.halfDecks[0].length > self.halfDecks[1].length){
+          self.playingGame = false;
+          self.clearPool();
           while(self.cardPool.length>0){
             self.halfDecks[0].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
@@ -258,6 +293,8 @@ var war = {
           }
           alert("Player 1 Wins!");
         }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+          self.playingGame = false;
+          self.clearPool();
           while(self.cardPool.length>0){
             self.halfDecks[1].push(self.cardPool.shift());
             $(".deck1counter").html(self.halfDecks[0].length);
