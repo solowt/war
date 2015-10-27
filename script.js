@@ -198,34 +198,20 @@ var war = {
       }
     });
     $(".deck1").on("click", function(){
-      if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
-        if (self.halfDecks[0].length > self.halfDecks[1].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[0].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          alert("Player 1 Wins!");
-        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[1].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          //TODO add game over check to other listeners
-          alert("Player 2 Wins!");
-        }
-      }else if(self.deck1Ready == true && self.playingGame){
+      if(self.deck1Ready == true && self.playingGame){
         $(".topdeck1").html("");
         $(".topdeck1").removeClass("hidden");
         self.deck1Ready = false;
       }
     });
     $(".deck2").on("click", function(){
+      if (self.deck2Ready == true && self.playingGame){
+        $(".topdeck2").html("");
+        $(".topdeck2").removeClass("hidden");
+        self.deck2Ready = false;
+      }
+    });
+    $(".topdeck1").on("click", function(){
       if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
         if (self.halfDecks[0].length > self.halfDecks[1].length){
           self.playingGame = false;
@@ -244,16 +230,9 @@ var war = {
             $(".deck1counter").html(self.halfDecks[0].length);
             $(".deck2counter").html(self.halfDecks[1].length);
           }
-          //TODO add game over check to other listeners
           alert("Player 2 Wins!");
         }
-      }else if (self.deck2Ready == true && self.playingGame){
-        $(".topdeck2").html("");
-        $(".topdeck2").removeClass("hidden");
-        self.deck2Ready = false;
       }
-    });
-    $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
         self.computerReady = false;
         if (Math.random()<.5){
@@ -288,6 +267,27 @@ var war = {
       }
     });
     $(".topdeck2").on("click", function(){
+      if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
+        if (self.halfDecks[0].length > self.halfDecks[1].length){
+          self.playingGame = false;
+          self.clearPool();
+          while(self.cardPool.length>0){
+            self.halfDecks[0].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+          alert("Player 1 Wins!");
+        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+          self.playingGame = false;
+          self.clearPool();
+          while(self.cardPool.length>0){
+            self.halfDecks[1].push(self.cardPool.shift());
+            $(".deck1counter").html(self.halfDecks[0].length);
+            $(".deck2counter").html(self.halfDecks[1].length);
+          }
+          alert("Player 2 Wins!");
+        }
+      }
       if (self.playingGame == true && self.deck2Ready == false){
         self.computerReady = false;
         if (Math.random()<.5){
@@ -330,31 +330,29 @@ var war = {
         self.intervalId = setInterval(function(){
           if (self.halfDecks[0].length == 0 || self.halfDecks[1].length == 0){
             clearInterval(self.intervalId);
+            if (self.halfDecks[0].length > self.halfDecks[1].length){
+              self.playingGame = false;
+              self.clearPool();
+              while(self.cardPool.length>0){
+                self.halfDecks[0].push(self.cardPool.shift());
+                $(".deck1counter").html(self.halfDecks[0].length);
+                $(".deck2counter").html(self.halfDecks[1].length);
+              }
+              alert("Player 1 Wins!");
+            }else if (self.halfDecks[1].length > self.halfDecks[0].length){
+              self.playingGame = false;
+              self.clearPool();
+              while(self.cardPool.length>0){
+                self.halfDecks[1].push(self.cardPool.shift());
+                $(".deck1counter").html(self.halfDecks[0].length);
+                $(".deck2counter").html(self.halfDecks[1].length);
+              }
+              alert("Player 2 Wins!");
+            }
             return;
           }
           self.playRound();
-        }, 200);
-
-        if (self.halfDecks[0].length > self.halfDecks[1].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[0].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          alert("Player 1 Wins!");
-        }else if (self.halfDecks[1].length > self.halfDecks[0].length){
-          self.playingGame = false;
-          self.clearPool();
-          while(self.cardPool.length>0){
-            self.halfDecks[1].push(self.cardPool.shift());
-            $(".deck1counter").html(self.halfDecks[0].length);
-            $(".deck2counter").html(self.halfDecks[1].length);
-          }
-          //TODO add game over check to other listeners
-          alert("Player 2 Wins!");
-        }
+        }, 25);
       }
     });
     $("#newGame").on("click", function(){
