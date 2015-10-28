@@ -127,7 +127,7 @@ var war = {
   },
   playWar: function(deck1, deck2){
     if(this.checkWinner()){
-      return;
+      return pair[1];
     }
     if (Math.random()<.5){
       dealCard1.play();
@@ -151,17 +151,14 @@ var war = {
       }
     }else if (pair[1] == "tie"){
       this.drawPool();
-      if (pair[0]){
-        for (var j=0; j<2; j++){
-          this.cardPool.push(pair[0].shift());
-        }
+      for (var j=0; j<2; j++){
+        this.cardPool.push(pair[0].shift());
       }
-      if (pair[0]){
-        for(var i=0;i<2;i++){
-          this.cardPool.push(deck1.shift());
-          this.cardPool.push(deck2.shift());
-        }
+      for(var i=0;i<2;i++){
+        this.cardPool.push(deck1.shift());
+        this.cardPool.push(deck2.shift());
       }
+
     }
     return pair[1];
   },
@@ -272,7 +269,7 @@ var war = {
     });
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
-        self.computerReady = false;
+        //self.computerReady = false;
         if (Math.random()<.5){
           dealCard1.play();
         }else{
@@ -295,7 +292,7 @@ var war = {
     });
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
-        self.computerReady = false;
+        //self.computerReady = false;
         if (Math.random()<.5){
           dealCard1.play();
         }else{

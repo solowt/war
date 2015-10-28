@@ -9,9 +9,12 @@ gh-pages: http://solowt.github.io/war/index.html
 
 
 things to do:
+GH-pages: http://solowt.github.io/war/index.html
 
-1. allow quick game to be called during normal game
 
-2. investigate undefined cards
+git repo: https://github.com/solowt/war
 
-3. collapse code
+1. Your HTML/CSS should pass the HTML5 Validator and CSS Validator
+
+2. A readme.md file, including explanations of the technologies used, the approach taken, installation instructions, unsolved problems, etc.
+At least 5 user stories.
