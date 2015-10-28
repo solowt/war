@@ -139,18 +139,23 @@ var war = {
   },
   //one round of war between two decks
   playWar: function(deck1, deck2){
+    //checks for winner
     if(this.checkWinner()){
       return pair[1];
     }
+    //play a random sound
     if (Math.random()<.5){
       dealCard1.play();
     }else{
       dealCard2.play();
     }
+    //take one card from each deck and compare them
     var pair = this.compare(deck1.shift(), deck2.shift());
+    //if the card from player 1 is higher add both cards to deck 1
     if (pair[1] == "player1"){
       deck1.push(pair[0].shift());
       deck1.push(pair[0].shift());
+      //empty the pool into the winner's deck
       while (this.cardPool.length > 0){
         if (this.cardPool[0]==undefined){
           this.cardPool.shift();
@@ -159,9 +164,11 @@ var war = {
         deck1.push(this.cardPool.shift());
         this.clearPool();
       }
+      //if the card from player 2 is higher add both cards to deck 2
     }else if (pair[1] == "player2"){
       deck2.push(pair[0].shift());
       deck2.push(pair[0].shift());
+      //empty the pool into the winner's deck
       while (this.cardPool.length > 0){
         if (this.cardPool[0]==undefined){
           this.cardPool.shift();
@@ -170,6 +177,8 @@ var war = {
         deck2.push(this.cardPool.shift());
         this.clearPool();
       }
+      //if the cards have the same value add to the pool (2 from each
+      //deck + the two tied cards)
     }else if (pair[1] == "tie"){
       this.drawPool();
       for (var j=0; j<2; j++){
@@ -181,6 +190,7 @@ var war = {
       }
 
     }
+    //return the winner string
     return pair[1];
   },
   //check to see if either deck is empty, if so, run through some steps
@@ -235,6 +245,7 @@ var war = {
   //long function to add listeners to every button
   addButtonListeners: function(){
     var self = this;
+    //create deck button creates a new deck
     $("#createDeck").on("click", function(){
       if (!self.playingGame) {
         $(".initdeck").removeClass("hidden");
@@ -242,11 +253,13 @@ var war = {
         self.currentDeck = self.makeDeck(13);
       }
     });
+    //shuffle deck function shuffles on click
     $("#shuffleDeck").on("click", function(){
       if (self.currentDeck){
         self.shuffleDeck(self.currentDeck);
       }
     });
+    //cuts a deck in half and toggles the hidden class on a lot of stuff
     $("#cutDeck").on("click", function(){
       if (!self.deckCut) {
         self.deck1Ready = true;
@@ -263,6 +276,7 @@ var war = {
         self.deckCut = true;
       }
     });
+    //if you click on the left deck...
     $(".deck1").on("click", function(){
       if(self.deck1Ready == true && self.playingGame){
         var card1 = $(".topdeck1");
@@ -277,6 +291,7 @@ var war = {
         self.deck1Ready = false;
       }
     });
+    //if you click on the right deck..
     $(".deck2").on("click", function(){
       if (self.deck2Ready == true && self.playingGame){
         var card2 = $(".topdeck2");
@@ -291,9 +306,9 @@ var war = {
         self.deck2Ready = false;
       }
     });
+    //click on the drawn card from the left deck
     $(".topdeck1").on("click", function(){
       if (self.playingGame == true && self.deck1Ready == false){
-        //self.computerReady = false;
         if (Math.random()<.5){
           dealCard1.play();
         }else{
@@ -314,9 +329,9 @@ var war = {
         self.startWar();
       }
     });
+    //click on the drawn card from the right deck
     $(".topdeck2").on("click", function(){
       if (self.playingGame == true && self.deck2Ready == false){
-        //self.computerReady = false;
         if (Math.random()<.5){
           dealCard1.play();
         }else{
@@ -337,10 +352,11 @@ var war = {
         self.startWar();
       }
     });
-
+    //this function draws and flips cards from both decks
     $("#draw").on("click", function(){
       self.playRound();
     });
+    //this plays a quick game
     $("#computer").on("click", function(){
       if (self.deck1Ready && self.deck2Ready && self.playingGame && self.computerReady){
         $(".topdeck1").css("left", "300px");
@@ -354,6 +370,7 @@ var war = {
         }, 25);
       }
     });
+    //clears everything to prep for a new game
     $("#newGame").on("click", function(){
       self.currentDeck = [""];
       self.halfDecks = [""];
@@ -377,6 +394,7 @@ var war = {
       $(".deck2counter").addClass("hidden");
     })
   },
+  //plays one round
   playRound: function(){
     if (this.deck1Ready && this.deck2Ready && this.playingGame){
       $(".deck1").trigger("click");
@@ -386,5 +404,6 @@ var war = {
     }
   },
 }
+//loads everything 
 war.loadSounds();
 war.addButtonListeners();
