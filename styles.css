@@ -98,6 +98,22 @@ section{
   top: 200px;
   right: 100px;
 }
+.target1 {
+  position: absolute;
+  border: 2px solid black;
+  width: 64px;
+  height: 90px;
+  top: 200px;
+  left: 300px;
+}
+.target2 {
+  position: absolute;
+  border: 2px solid black;
+  width: 64px;
+  height: 90px;
+  top: 200px;
+  right: 300px;
+}
 .deck1counter{
   position: absolute;
   border: 2px solid black;
@@ -123,7 +139,7 @@ section{
   width: 64px;
   height: 90px;
   top: 200px;
-  left: 300px;
+  left: 100px;
 
 }
 .topdeck2{
@@ -133,7 +149,7 @@ section{
   width: 64px;
   height: 90px;
   top: 200px;
-  right: 300px;
+  right: 100px;
 
 }
 .initdeck{

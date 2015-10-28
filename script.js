@@ -8,6 +8,7 @@ var war = {
   deck2Ready: false, //another boolean to keep track of the game state
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
+  quickGame: false,
   deckCut: false,
   computerReady: true,
   intervalId: null, //will hold setInterval timer ID
@@ -197,8 +198,14 @@ var war = {
       var beforeLength1 = this.halfDecks[0].length;
       var beforeLength2 = this.halfDecks[1].length;
       this.playWar(this.halfDecks[0], this.halfDecks[1])
-      setTimeout(function(){$(".topdeck1").addClass("hidden cardback");}, 2000);
-      setTimeout(function(){$(".topdeck2").addClass("hidden cardback");}, 2000);
+      var self = this;
+      setTimeout(function(){
+        $(".topdeck1").addClass("hidden cardback");
+        $(".topdeck2").addClass("hidden cardback");
+      }, 2000);
+      // setTimeout(function(){
+      //
+      //   $(".topdeck2").addClass("hidden cardback");}, 2000);
       var subtractString1 = this.halfDecks[0].length-beforeLength1;
       var subtractString2 = this.halfDecks[1].length-beforeLength2;
       $(".deck1counter").html(this.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
@@ -240,15 +247,29 @@ var war = {
     });
     $(".deck1").on("click", function(){
       if(self.deck1Ready == true && self.playingGame){
-        $(".topdeck1").html("");
-        $(".topdeck1").removeClass("hidden");
+        var card1 = $(".topdeck1");
+        card1.html("");
+        if (!self.quickGame){
+          card1.css("left","100px");
+        }
+        card1.removeClass("hidden");
+        if (!self.quickGame){
+          card1.animate({left: $(".target1").css("left")});
+        }
         self.deck1Ready = false;
       }
     });
     $(".deck2").on("click", function(){
       if (self.deck2Ready == true && self.playingGame){
-        $(".topdeck2").html("");
-        $(".topdeck2").removeClass("hidden");
+        var card2 = $(".topdeck2");
+        card2.html("");
+        if (!self.quickGame){
+          card2.css("right","100px");
+        }
+        card2.removeClass("hidden");
+        if (!self.quickGame){
+          card2.animate({right: $(".target2").css("right")});
+        }
         self.deck2Ready = false;
       }
     });
@@ -304,6 +325,9 @@ var war = {
     });
     $("#computer").on("click", function(){
       if (self.deck1Ready && self.deck2Ready && self.playingGame && self.computerReady){
+        $(".topdeck1").css("left", "300px");
+        $(".topdeck2").css("right", "300px");
+        self.quickGame = true;
         self.intervalId = setInterval(function(){
           if (self.checkWinner() == true){
             return;
@@ -315,6 +339,7 @@ var war = {
     $("#newGame").on("click", function(){
       self.currentDeck = [""];
       self.halfDecks = [""];
+      self.quickGame = false;
       self.playingGame = false;
       self.deck1Ready = false;
       self.readyCard1 = false;
