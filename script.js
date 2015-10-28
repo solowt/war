@@ -12,6 +12,7 @@ var war = {
   deckCut: false, // ""
   computerReady: true, // ""
   intervalId: null, //will hold setInterval timer ID
+  counter: 0, //count number of turns
   //template for cards with X and Y in place of value and suit
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB2'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   //loads all sounds as global vars
@@ -156,8 +157,19 @@ var war = {
     var pair = this.compare(deck1.shift(), deck2.shift());
     //if the card from player 1 is higher add both cards to deck 1
     if (pair[1] == "player1"){
+      //shuffles the pairs half the time.  this makes the game
+      //non-deterministic
+      if (Math.random() > .5){
+        var temp = pair[0][0];
+        pair[0][1] = pair[0][0];
+        pair[0][0] = temp;
+      }
       deck1.push(pair[0].shift());
       deck1.push(pair[0].shift());
+      //shuffle the card pool
+      if (this.cardPool.length > 0){
+         this.cardPool = this.shuffleDeck(this.cardPool);
+      }
       //empty the pool into the winner's deck
       while (this.cardPool.length > 0){
         if (this.cardPool[0]==undefined){
@@ -169,8 +181,19 @@ var war = {
       }
       //if the card from player 2 is higher add both cards to deck 2
     }else if (pair[1] == "player2"){
+      //shuffles the pairs half the time.  this makes the game
+      //non-deterministic
+      if (Math.random() > .5){
+        var temp = pair[0][0];
+        pair[0][1] = pair[0][0];
+        pair[0][0] = temp;
+      }
       deck2.push(pair[0].shift());
       deck2.push(pair[0].shift());
+      //shuffle card pool
+      if (this.cardPool.length > 0){
+         this.cardPool = this.shuffleDeck(this.cardPool);
+      }
       //empty the pool into the winner's deck
       while (this.cardPool.length > 0){
         if (this.cardPool[0]==undefined){
@@ -199,6 +222,7 @@ var war = {
   //check to see if either deck is empty, if so, run through some steps
   checkWinner: function(){
     if (this.halfDecks[0].length == 0 || this.halfDecks[1].length == 0){
+      console.log("Game ended in: "+this.counter+" turns.");
       clearInterval(this.intervalId);
       if (this.halfDecks[0].length > this.halfDecks[1].length){
         this.playingGame = false;
@@ -318,6 +342,7 @@ var war = {
           dealCard2.play();
         }
         console.log("player 1 card: "+self.halfDecks[0][0]);
+        self.counter++
         $(".topdeck1").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[0][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
@@ -341,6 +366,7 @@ var war = {
           dealCard2.play();
         }
         console.log("player 2 card: "+self.halfDecks[1][0]);
+        self.counter++;
         $(".topdeck2").removeClass("cardback");
         var valueArray = self.getCardVal(self.halfDecks[1][0]);
         var newCardTemplate = self.drawCard(self.cardTemplate, valueArray);
@@ -371,6 +397,7 @@ var war = {
           }
           self.playRound();
         }, 25);
+
       }
     });
     //clears everything to prep for a new game
