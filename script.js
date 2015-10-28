@@ -106,10 +106,13 @@ var war = {
     }
     var card1Html = $(".front").eq(0).html();
     var card2Html = $(".front").eq(1).html();
-    $(".pool").append($("<div class='poolcard1 newpool'>"+card1Html+"</div>"));
-    $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"));
-    if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
-      $(".newpool").css("color", "red");
+    $(".pool").append($("<div class='poolcard1 newpool tie1'>"+card1Html+"</div>"));
+    $(".pool").append($("<div class='poolcard2  newpool tie2'>"+card2Html+"</div>"));
+    if ($(".spotB2").eq(0).html() == "♥" || $(".spotB2").eq(0).html() == "♦"){
+      $(".newpool").eq(0).css("color", "red");
+    }
+    if ($(".spotB2").eq(1).html() == "♥" || $(".spotB2").eq(1).html() == "♦"){
+      $(".newpool").eq(1).css("color", "red");
     }
   },
   //clears the part pool
@@ -404,6 +407,6 @@ var war = {
     }
   },
 }
-//loads everything 
+//loads everything
 war.loadSounds();
 war.addButtonListeners();
