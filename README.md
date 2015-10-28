@@ -18,7 +18,7 @@ Coding ties was a bit challenging.  In war, in the event of a tie, each player p
 
 I added html and css after the js was more or less done.  For this reason the first half of my js file focuses on the the deck and the game and the second half is using DOM manipulation and adding listeners to buttons and so on.  The latter part of my code focuses almost entirely on the graphical representation of war.
 
-A persistent error I've noticed is undefined cards being added to the winning deck if the game ends in a tie.  This doesn't happen consistently.
+A persistent error I've noticed is undefined cards being added to the winning deck if the game ends in a tie.  This doesn't happen consistently.  It's also possible to break the game by pushing buttons in a certain order.  However, the game can be reset with the new game button if this happens.
 
 User stories for war:
 
