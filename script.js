@@ -8,17 +8,20 @@ var war = {
   deck2Ready: false, //another boolean to keep track of the game state
   readyCard1: false, //another boolean to..
   readyCard2: false, //another boolea...
-  quickGame: false,
-  deckCut: false,
-  computerReady: true,
+  quickGame: false, // ""
+  deckCut: false, // ""
+  computerReady: true, // ""
   intervalId: null, //will hold setInterval timer ID
+  //template for cards with X and Y in place of value and suit
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB2'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
+  //loads all sounds as global vars
   loadSounds: function(){
     shuffleSound = new Audio("sounds/shuffle.mp3");
     cutDeck = new Audio("sounds/cutDeck.mp3");
     dealCard1 = new Audio("sounds/dealCard.mp3");
     dealCard2 = new Audio("sounds/dealCard2.mp3");
   },
+  //takes a card and returns an array containing its value and suit
   getCardVal: function(card){
     valueArray = [];
     var valueCard = card.split("-");
@@ -35,6 +38,8 @@ var war = {
     }
     return valueArray;
   },
+  //takes the card template and edits it based on the card being rendered
+  //then returns the html string
   drawCard: function(string, valueArray) {
     returnString = "";
     valueArray[0] = parseInt(valueArray[0]);
@@ -53,6 +58,7 @@ var war = {
     returnString = returnString.replace(/Y/g, valueArray[1]);
     return returnString;
   },
+  //make a new deck
   makeDeck: function(numRanks) {
     var newDeck = [];
     for (var i=0; i<this.suits.length; i++){
@@ -63,6 +69,7 @@ var war = {
     }
     return newDeck;
   },
+  //shuffles a deck
   shuffleDeck: function(deck) {
     shuffleSound.play();
     var j, k;
@@ -75,6 +82,8 @@ var war = {
     }
     return deck;
   },
+  //cuts a deck in half, returns an array with 2 indices, each one being a
+  //deck
   cutDeck: function(deck){
     cutDeck.play();
     var bothDecks = [];
@@ -87,6 +96,7 @@ var war = {
     bothDecks[1]=halfDeck;
     return bothDecks;
   },
+  //draws the card pool on the screen in the event of a tie
   drawPool: function(){
     for (var i =0; i<2; i++){
       $(".pool").append($("<div class='poolcard1 cardback'></div>"));
@@ -98,14 +108,16 @@ var war = {
     var card2Html = $(".front").eq(1).html();
     $(".pool").append($("<div class='poolcard1 newpool'>"+card1Html+"</div>"));
     $(".pool").append($("<div class='poolcard2  newpool'>"+card2Html+"</div>"));
-    //check this
     if ($(".spotB2").html() == "♥" || $(".spotB2").html() == "♦"){
       $(".newpool").css("color", "red");
     }
   },
+  //clears the part pool
   clearPool: function(){
     $(".pool").html("");
   },
+  //compares two cards, returns an array with each card and the winner as
+  //3 indices
   compare: function(card1, card2){
     var returnCards=[[],""];
     var valueCard1 = parseInt(card1.split("-")[0]);
@@ -125,6 +137,7 @@ var war = {
     }
     return returnCards;
   },
+  //one round of war between two decks
   playWar: function(deck1, deck2){
     if(this.checkWinner()){
       return pair[1];
@@ -170,6 +183,7 @@ var war = {
     }
     return pair[1];
   },
+  //check to see if either deck is empty, if so, run through some steps
   checkWinner: function(){
     if (this.halfDecks[0].length == 0 || this.halfDecks[1].length == 0){
       clearInterval(this.intervalId);
@@ -197,6 +211,7 @@ var war = {
     }
     return false;
   },
+  //extension of the playWar method, also deals with html/css side of the game
   startWar: function(){
     if (this.readyCard2 && this.readyCard1){
       this.readyToDeal = false;
@@ -217,6 +232,7 @@ var war = {
       this.readyCard1 = false;
     }
   },
+  //long function to add listeners to every button
   addButtonListeners: function(){
     var self = this;
     $("#createDeck").on("click", function(){
