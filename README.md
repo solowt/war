@@ -2,7 +2,6 @@ gh-pages: http://solowt.github.io/war/index.html
 
 git repo: https://github.com/solowt/war
 
- A readme.md file, including explanations of the technologies used, the approach taken, installation instructions, unsolved problems, etc.
 Project:
 
 Used html, css, and javascript to create a version of the children's card game war. [wikipedia](https://en.wikipedia.org/wiki/War_(card_game)).
