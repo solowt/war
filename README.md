@@ -20,6 +20,8 @@ I added html and css after the js was more or less done.  For this reason the fi
 
 A persistent error I've noticed is undefined cards being added to the winning deck if the game ends in a tie.  This doesn't happen consistently.  It's also possible to break the game by pushing buttons in a certain order.  However, the game can be reset with the new game button if this happens.
 
+Note: I introduced randomness into the game by shuffling cards before I put them back in the deck of the player who has just won a hand.  This reduces game length significantly compared to how I was doing it previously (before I was putting the stronger card into the bottom of the deck first).  
+
 User stories for war:
 
 1. As a user, I want to be able to be able to see html representations of cards because text based games are boring.
