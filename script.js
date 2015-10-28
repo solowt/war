@@ -139,6 +139,10 @@ var war = {
       deck1.push(pair[0].shift());
       deck1.push(pair[0].shift());
       while (this.cardPool.length > 0){
+        if (this.cardPool[0]==undefined){
+          this.cardPool.shift();
+          break;
+        }
         deck1.push(this.cardPool.shift());
         this.clearPool();
       }
@@ -146,6 +150,10 @@ var war = {
       deck2.push(pair[0].shift());
       deck2.push(pair[0].shift());
       while (this.cardPool.length > 0){
+        if (this.cardPool[0]==undefined){
+          this.cardPool.shift();
+          break;
+        }
         deck2.push(this.cardPool.shift());
         this.clearPool();
       }
