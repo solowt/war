@@ -18,6 +18,8 @@ Coding ties was a bit challenging.  In war, in the event of a tie, each player p
 
 I added html and css after the js was more or less done.  For this reason the first half of my js file focuses on the the deck and the game and the second half is using DOM manipulation and adding listeners to buttons and so on.  The latter part of my code focuses almost entirely on the graphical representation of war.
 
+A persistent error I've noticed is undefined cards being added to the winning deck if the game ends in a tie.  This doesn't happen consistently.
+
 User stories for war:
 
 1. As a user, I want to be able to be able to see html representations of cards because text based games are boring.
