@@ -405,6 +405,7 @@ var war = {
       self.currentDeck = [""];
       self.halfDecks = [""];
       self.quickGame = false;
+      self.counter = 0;
       self.playingGame = false;
       self.deck1Ready = false;
       self.readyCard1 = false;
