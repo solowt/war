@@ -163,7 +163,7 @@ var war = {
         }
       }
     }
-    return;
+    return pair[1];
   },
   checkWinner: function(){
     if (this.halfDecks[0].length == 0 || this.halfDecks[1].length == 0){
@@ -197,15 +197,12 @@ var war = {
       this.readyToDeal = false;
       var beforeLength1 = this.halfDecks[0].length;
       var beforeLength2 = this.halfDecks[1].length;
-      this.playWar(this.halfDecks[0], this.halfDecks[1])
+      var winnerStr = this.playWar(this.halfDecks[0], this.halfDecks[1])
       var self = this;
       setTimeout(function(){
         $(".topdeck1").addClass("hidden cardback");
         $(".topdeck2").addClass("hidden cardback");
       }, 2000);
-      // setTimeout(function(){
-      //
-      //   $(".topdeck2").addClass("hidden cardback");}, 2000);
       var subtractString1 = this.halfDecks[0].length-beforeLength1;
       var subtractString2 = this.halfDecks[1].length-beforeLength2;
       $(".deck1counter").html(this.halfDecks[0].length + " " + (Math.sign(subtractString1) == -1 ? "": "+") +" "+ subtractString1);
