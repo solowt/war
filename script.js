@@ -1,4 +1,4 @@
-var war = {
+var war = { // NHO: Great job wrapping all your code in a global object!
   cardPool: [], //to hold cards in the event of a tie
   suits: [["Clubs","&clubs;" ], ["Hearts","&hearts;"], ["Diamonds","&diams;"], ["Spades","&spades;"]], //suits
   currentDeck: null, //the current deck being used
@@ -16,14 +16,14 @@ var war = {
   //template for cards with X and Y in place of value and suit
   cardTemplate: "<div class='card'>\n\t<div class='front'>\n\t\t<div class='index'>X<br />Y</div>\n\t\t<div class='spotB2'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t\t<div class='spotB1'>Y</div>\n\t</div>\n</div>",
   //loads all sounds as global vars
-  loadSounds: function(){
+  loadSounds: function(){ // NHO: Loved the sounds!
     shuffleSound = new Audio("sounds/shuffle.mp3");
     cutDeck = new Audio("sounds/cutDeck.mp3");
     dealCard1 = new Audio("sounds/dealCard.mp3");
     dealCard2 = new Audio("sounds/dealCard2.mp3");
   },
   //takes a card and returns an array containing its value and suit
-  getCardVal: function(card){
+  getCardVal: function(card){ // NHO: As you pointed out, I think your code could be simplified by making each card an object rather than a string
     valueArray = [];
     var valueCard = card.split("-");
     valueArray[0] = parseInt(valueCard[0]);
@@ -55,7 +55,7 @@ var war = {
     }else if (valueArray[0]==12){
       valueArray[0] = 'A';
     }
-    returnString = string.replace(/X/g, valueArray[0]);
+    returnString = string.replace(/X/g, valueArray[0]); // NHO: RegEx!
     returnString = returnString.replace(/Y/g, valueArray[1]);
     return returnString;
   },
@@ -64,14 +64,14 @@ var war = {
     var newDeck = [];
     for (var i=0; i<this.suits.length; i++){
       for (var j=0; j<numRanks;j++){
-        var cardName = j+'-'+this.suits[i][0];
+        var cardName = j+'-'+this.suits[i][0]; // NHO: would recommend making each card an object here!
         newDeck.push(cardName);
       }
     }
     return newDeck;
   },
   //shuffles a deck
-  shuffleDeck: function(deck) {
+  shuffleDeck: function(deck) { // NHO: Fischer-Yates random!
     shuffleSound.play();
     var j, k;
     var temp;
@@ -90,7 +90,7 @@ var war = {
     var bothDecks = [];
     var halfDeck = [];
     var halfDeckLength=deck.length/2;
-    while (deck.length>halfDeckLength){
+    while (deck.length>halfDeckLength){ // NHO: clever!
       halfDeck.push(deck.pop());
     }
     bothDecks[0]=deck;
@@ -98,7 +98,7 @@ var war = {
     return bothDecks;
   },
   //draws the card pool on the screen in the event of a tie
-  drawPool: function(){
+  drawPool: function(){ // NHO: Visually, really liked this implementation
     for (var i =0; i<2; i++){
       $(".pool").append($("<div class='poolcard1 cardback'></div>"));
     }
@@ -122,7 +122,7 @@ var war = {
   },
   //compares two cards, returns an array with each card and the winner as
   //3 indices
-  compare: function(card1, card2){
+  compare: function(card1, card2){ // NHO: The essentail function of war! Like how you included the winning player as string in the return
     var returnCards=[[],""];
     var valueCard1 = parseInt(card1.split("-")[0]);
     var valueCard2 = parseInt(card2.split("-")[0]);
@@ -142,7 +142,7 @@ var war = {
     return returnCards;
   },
   //one round of war between two decks
-  playWar: function(deck1, deck2){
+  playWar: function(deck1, deck2){ // NHO: Would love to think of ways this function could be simplified
     //checks for winner
     if(this.checkWinner()){
       return pair[1];
@@ -270,7 +270,7 @@ var war = {
     }
   },
   //long function to add listeners to every button
-  addButtonListeners: function(){
+  addButtonListeners: function(){ // NHO: Really like the level of detail to manage game state
     var self = this;
     //create deck button creates a new deck
     $("#createDeck").on("click", function(){
@@ -438,3 +438,9 @@ var war = {
 //loads everything
 war.loadSounds();
 war.addButtonListeners();
+
+// NHO: Overall this is some very good JS. I really like how you utilize a global object to encapsulate all your logic
+// As far as simplification goes, I think a lot of value could be gained by converting to a deck of card objects
+// rather than by having to parse through strings. Also, thinking big picture, it's generally good practice to seperate our logic, from the view.
+// We will go further in-depth into these concepts in the weeks to come, but I would encourage you to start thinking about objects
+// representing business data (our Models), and an object representing our view state (which would take a model to build a view)!
